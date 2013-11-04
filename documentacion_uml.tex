@@ -64,7 +64,84 @@
 \section{Casos de Uso}
 
 
-\subsection{A subsection}
+Caso de Uso: Seleccionar nivel de dificultad del juego. 
+\\Descripción: 
+En este caso de uso describimos los posibles escenarios que se puedan presentar cuando el usuario selecciona un nivel de dificultad o personalizar el tamaño del tablero.
+Según el nivel de dificultad que el usuario escoja se presentará un tablero con un tamaño y un número de minas específico.\
+\\  \
+ 
+Caso de Uso: Marcar celda con una bandera . 
+\\Descripción: 
+En este caso de uso describimos los posibles escenarios que se puedan presentar cuando el usuario selecciona una bandera y la arrastra a una celda determinada, tomamos en cuenta como escenario exitoso que la celda a la que vamos a arrastrar la bandera contiene una mina.\
+\\ \
+
+\section{Escenarios}
+Caso de uso 2: Seleccionar nivel de dificultad del juego
+\\Escenario 2.1: El usuario selecciona el nivel de dificultad principiante.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra dos opciones Jugar o Salir.
+\item El usuario seleccionó la opción de jugar.
+\item El juego muestra un submenu en el que el usuario debera escoger Principiante, Intermedio o Avanzado.
+\item El usuario seleccionó el nivel de dificultad principiante.
+\end {itemize}
+Resultados:
+El juego muestra un tablero de dimensión 9x9 con 10 minas distribuidas aleatoriamente
+\\   \
+\\Caso de uso 2: Seleccionar nivel de dificultad del juego\
+\\Escenario 2.2: El usuario selecciona el nivel de dificultad Intermedio.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra dos opciones Jugar o Salir.
+\item El usuario seleccionó la opción de jugar.
+\item El juego muestra un submenu en el que el usuario deberá escoger Principiante, Intermedio o Avanzado.
+\item El usuario seleccionó el nivel de dificultad Intermedio.
+\end {itemize}
+Resultados:
+El juego muestra un tablero de dimensión 16x16 con 40 minas distribuidas aleatoriamente.
+\\ \
+\\Caso de uso 2: Seleccionar nivel de dificultad del juego\
+\\Escenario 2.3: El usuario selecciona el nivel de dificultad Avanzado.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra dos opciones Jugar o Salir.
+\item El usuario seleccionó la opción de jugar.
+\item El juego muestra un submenu en el que el usuario deberá escoger Principiante, Intermedio o Avanzado.
+\item El usuario seleccionó el nivel de dificultad Avanzado.
+\end {itemize}
+Resultados:
+El juego muestra un tablero de dimensión 16x30 con 99 minas distribuidas aleatoriamente.
+\\ \
+
+Caso de uso 3: Marcar celda con una bandera
+\\Escenario 3.1: La celda es marcada  con una bandera de manera exitosa .\
+\\Actores:Usuario.\
+\\Asunciones: 
+\begin{itemize}
+\item El usuario pudo ingresar correctamente al juego.
+\item La ceda donde vamos a colocar la bandera no ha sido descubierta
+\item Contenido de la celda donde vamos a colocar la bandera es una mina.
+\end {itemize}
+Acciones:
+\begin{itemize}
+\item El juego muestra junto al tablero un icono donde se encuentra dibujada una bandera.
+\item El usuario selecciona el icono con la bandera y la arrastra a una celda del tablero. 
+\end {itemize}
+Resultados:
+La celda escogida por el usuario fue marcada con una bandera.
+
+
+
+
+
+
+
 
 
 \end{document}
