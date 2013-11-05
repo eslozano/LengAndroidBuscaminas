@@ -62,13 +62,21 @@
 \maketitle
 
 \section{Casos de Uso}
-
+Caso de Uso: Iniciar el juego. 
+\\Descripción: 
+En este caso de uso describimos los posibles escenarios que se puedan presentar cuando el usuario inicia el juego. El usuario puede escoger entre jugar, revisar puntajes altos, ver la ayuda y salir del juego. \
+\\  \
 
 Caso de Uso: Seleccionar nivel de dificultad del juego. 
 \\Descripción: 
 En este caso de uso describimos los posibles escenarios que se puedan presentar cuando el usuario selecciona un nivel de dificultad o personalizar el tamaño del tablero.
 Según el nivel de dificultad que el usuario escoja se presentará un tablero con un tamaño y un número de minas específico.\
 \\  \
+
+Caso de Uso: Descubrir celda. 
+\\Descripción: 
+En este caso de uso describimos los posibles escenarios que se puedan presentar cuando el usuario descubre una celda, esto lo hace por medio de un tap en la pantalla. \
+\\  \ 
  
 Caso de Uso: Marcar celda con una bandera . 
 \\Descripción: 
@@ -76,6 +84,47 @@ En este caso de uso describimos los posibles escenarios que se puedan presentar 
 \\ \
 
 \section{Escenarios}
+
+Caso de uso 1: Iniciar el juego
+\\Escenario 1.1: El usuario selecciona jugar.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra cuatro opciones Juga, Revisar puntajes altos, Ver la ayuda o Salir.
+\item El usuario seleccionó la opción de Jugar.
+\item El juego muestra un submenu en el que el usuario debera escoger la dificultad deseada.
+\end {itemize}
+Resultados:
+El juego muestra un submenu de para escoger la dificultad
+\\   \
+Caso de uso 1: Iniciar el juego
+\\Escenario 1.2: El usuario selecciona Revisar puntajes altos.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra cuatro opciones Juga, Revisar puntajes altos, Ver la ayuda o Salir.
+\item El usuario seleccionó la opción de Revisar puntajes altos.
+\item El juego muestra un listado de los mejores tiempos por dificultad.
+\end {itemize}
+Resultados:
+El juego muestra un listado de los mejores puntajes por dificultad
+\\   \
+Caso de uso 1: Iniciar el juego
+\\Escenario 1.3: El usuario selecciona Ver la ayuda.\
+\\Actores:Usuario.\
+\\Asunciones: El usuario pudo ingresar correctamente al juego.\
+\\Acciones:\
+\begin{itemize}
+\item El juego muestra cuatro opciones Juga, Revisar puntajes altos, Ver la ayuda o Salir.
+\item El usuario seleccionó la opción de Ver la ayuda.
+\item El juego muestra un grafico indicando las reglas basicas del juego.
+\end {itemize}
+Resultados:
+El juego muestra un grafico indicando las reglas basicas del juego
+\\   \
+
 Caso de uso 2: Seleccionar nivel de dificultad del juego
 \\Escenario 2.1: El usuario selecciona el nivel de dificultad principiante.\
 \\Actores:Usuario.\
@@ -135,11 +184,57 @@ Acciones:
 \end {itemize}
 Resultados:
 La celda escogida por el usuario fue marcada con una bandera.
+\\ \
 
+Caso de uso 4: Descubrir celda\
+\\Escenario 4.1: El usuario descubre una celda con numero.\
+\\Actores:Usuario.\
+\\Asunciones: 
+\begin{itemize}
+\item El usuario pudo ingresar correctamente al juego.
+\item La ceda que se va a descubrir no ha sido descubierta
+\end {itemize}
+Acciones:
+\begin{itemize}
+\item El juego muestra un tablero con celdas.
+\item El usuario da tap a una celda con número. 
+\end {itemize}
+Resultados:
+La celda escogida por el usuario es descubierta
+\\ \
 
+Escenario 4.2: El usuario descubre una celda en blanco.\
+Actores:Usuario.\
+Asunciones: 
+\begin{itemize}
+\item El usuario pudo ingresar correctamente al juego.
+\item La ceda que se va a descubrir no ha sido descubierta
+\end {itemize}
+Acciones:
+\begin{itemize}
+\item El juego muestra un tablero con celdas.
+\item El usuario da tap a una celda en blanco. 
+\end {itemize}
+Resultados:
+La celda escogida por el usuario es descubierta y ademas las celdas alrededor tambien son descubiertas
+\\ \
 
-
-
+Escenario 4.3: El usuario descubre una celda con mina.\
+Actores:Usuario.\
+Asunciones: 
+\begin{itemize}
+\item El usuario pudo ingresar correctamente al juego.
+\item La ceda que se va a descubrir no ha sido descubierta
+\end {itemize}
+Acciones:
+\begin{itemize}
+\item El juego muestra un tablero con celdas.
+\item El usuario da tap a una celda con mina. 
+\end {itemize}
+Resultados:
+Se muestran todas las minas del tablero
+El usuario pierde el juego
+\\ \
 
 
 
