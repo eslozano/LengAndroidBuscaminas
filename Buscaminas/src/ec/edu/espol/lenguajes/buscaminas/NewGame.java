@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.Menu;
-import android.view.textservice.SentenceSuggestionsInfo;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -16,16 +15,6 @@ public class NewGame extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_game);
 		
-		
-		
-		fontcustom = (RadioButton)findViewById(R.id.principiante);	
-		fontcustom.setTypeface(Typeface.createFromAsset(getAssets(), "gloriahallelujah.ttf"));
-		fontcustom = (RadioButton)findViewById(R.id.intermedio);	
-		fontcustom.setTypeface(Typeface.createFromAsset(getAssets(), "gloriahallelujah.ttf"));
-		fontcustom = (RadioButton)findViewById(R.id.avanzado);	
-		fontcustom.setTypeface(Typeface.createFromAsset(getAssets(), "gloriahallelujah.ttf"));
-		fontcustom = (RadioButton)findViewById(R.id.usuario);	
-		fontcustom.setTypeface(Typeface.createFromAsset(getAssets(), "gloriahallelujah.ttf"));
 	}
 
 	@Override
