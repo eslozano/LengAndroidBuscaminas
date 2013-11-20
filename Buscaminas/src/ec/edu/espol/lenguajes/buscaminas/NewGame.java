@@ -2,9 +2,9 @@ package ec.edu.espol.lenguajes.buscaminas;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.Typeface;
+
 import android.view.Menu;
-import android.widget.RadioButton;
+
 import android.widget.TextView;
 
 public class NewGame extends Activity {
