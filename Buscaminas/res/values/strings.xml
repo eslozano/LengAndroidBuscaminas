@@ -14,5 +14,6 @@
     <string name="intermedio">Intermediate</string>
     <string name="avanzado">Advanced</string>
     <string name="usuario">Custom</string>
+    <string name="title_activity_tablero">Buscaminas</string>
 
 </resources>

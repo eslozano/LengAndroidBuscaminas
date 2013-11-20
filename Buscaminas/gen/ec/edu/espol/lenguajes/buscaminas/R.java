@@ -39,12 +39,14 @@ public final class R {
         public static final int activity_high_scores=0x7f030001;
         public static final int activity_menu_principal=0x7f030002;
         public static final int activity_new_game=0x7f030003;
+        public static final int activity_tablero=0x7f030004;
     }
     public static final class menu {
         public static final int about=0x7f070000;
         public static final int high_scores=0x7f070001;
         public static final int menu_principal=0x7f070002;
         public static final int new_game=0x7f070003;
+        public static final int tablero=0x7f070004;
     }
     public static final class string {
         public static final int acerca=0x7f050004;
@@ -59,6 +61,7 @@ public final class R {
         public static final int title_activity_about=0x7f050008;
         public static final int title_activity_high_scores=0x7f050005;
         public static final int title_activity_new_game=0x7f050007;
+        public static final int title_activity_tablero=0x7f05000d;
         public static final int usuario=0x7f05000c;
     }
     public static final class style {
