@@ -1,17 +1,16 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
 public class Celda {
-<<<<<<< HEAD
+
 	private int fila, columna, contenido, ancho;
+	private EstadoCelda estado;
 	
 	public void fijarxy(int x,int y, int ancho) {
         this.columna=x;
         this.fila=y;
         this.ancho=ancho;
     }
-
-	private int fila, columna, contenido;
-	private EstadoCelda estado;
+	
 
 	public Celda(int fila, int columna) {
 		super();

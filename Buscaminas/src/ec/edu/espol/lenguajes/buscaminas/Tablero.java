@@ -1,11 +1,8 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
-<<<<<<< HEAD
-
-=======
 import java.util.ArrayList;
 import java.util.Random;
->>>>>>> 9b1ff3af26fd2208d6491f69cfdc9a0f215f4091
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -18,14 +15,12 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.LinearLayout;
 
-<<<<<<< HEAD
-public class Tablero extends Activity implements OnTouchListener {
+
+public class Tablero extends Activity implements OnTouchListener{	
 	private Tableroview Tableroview;
 	private Celda[][] celdas;
-	public class Tablero extends Activity {
 	private int columnas, filas, numMinas;
 	private ArrayList<Celda> celdaMinas;
-	private Celda[][] celdas;
 	private EstadoTablero estado;
 	
 	public Tablero(int columnas, int filas, int numMinas) {
@@ -93,9 +88,7 @@ public class Tablero extends Activity implements OnTouchListener {
 		return false;
 	}
 	
-	
-	
-	
+		
 	
 	 class Tableroview extends View {
 
@@ -158,3 +151,4 @@ public class Tablero extends Activity implements OnTouchListener {
 	        }
 	    }
 }
+	
