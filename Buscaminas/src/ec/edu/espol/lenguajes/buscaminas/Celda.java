@@ -51,6 +51,15 @@ public class Celda {
 		}
 		return false;
 	}
+	
+	public void incrementaContenido() {
+		if (this.contenido!=9)
+			this.contenido++;
+	}
+
+	public void descubrir() {
+		this.estado=EstadoCelda.DESCUBIERTA;
+	}
 
 
 }

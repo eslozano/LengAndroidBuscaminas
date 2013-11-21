@@ -42,19 +42,27 @@ public class Tablero extends Activity implements OnTouchListener{
 			}
 	}
 	
-	public void llenarMinas(int fila, int columna){
-		Random r=new Random();
-		for(int i =0;i<this.numMinas;i++){
-			int rndFila, rndColumna;
-			do{
-				rndColumna = r.nextInt(this.columnas);
-				rndFila = r.nextInt(this.filas);				
-			}while((rndFila==fila && rndColumna == columna) || !this.celdaMinas.contains(new Celda(rndFila,rndColumna)));
-			this.getCelda(rndFila,rndColumna).setContenido(9);//Colocar el valor de mina
-			this.celdaMinas.add(this.getCelda(rndFila, rndColumna));
-		}
-	}
+	public void llenarMinas(int fila, int columna) {
+        Random r = new Random();
+        for (int i = 0; i < this.numMinas; i++) {
+            int rndFila, rndColumna;
+            do {
+                rndColumna = r.nextInt(this.columnas);
+                rndFila = r.nextInt(this.filas);
+            } while ((rndFila == fila && rndColumna == columna) || this.celdaMinas.contains(new Celda(rndFila, rndColumna)));
+            this.getCelda(rndFila, rndColumna).setContenido(9);//Colocar el valor de mina
+            this.celdaMinas.add(this.getCelda(rndFila, rndColumna));
+        }
+        for (Celda mina : this.celdaMinas) {
+            ArrayList<Celda> adyacentes = this.getAdyacentes(mina);
+            System.out.println("Fila: "+ mina.getFila() +"  Columna: " + mina.getColumna() + "  Adyacentes: " + adyacentes.size());
+            for (Celda adyacente : adyacentes) {
+                adyacente.incrementaContenido();                
+            }            
+        }
+    }
 
+	
 	public Celda getCelda(int fila, int columna) {
 		return this.celdas[fila][columna];		
 	}
@@ -63,18 +71,70 @@ public class Tablero extends Activity implements OnTouchListener{
 		ArrayList<Celda> adyacentes = new ArrayList<Celda>();
 		for(int i=fila-1;i<fila + 2;i++)
 			for(int j=columna-1; j<columna + 2;j++){
-				if(i>=0 && i<this.filas && j>=0 && j<this.columnas && (i!=fila || i!=columna)){
+				if(i >= 0 && i < this.filas && j >= 0 && j < this.columnas && (i != fila || j != columna)){
 					adyacentes.add(this.getCelda(i,j));
 				}
 			}
 		return adyacentes;
 	}
 	
+	public ArrayList<Celda> getAdyacentes(Celda celda) {
+        return getAdyacentes(celda.getFila(), celda.getColumna());
+    }
+	
 	public void marcarCelda(int fila, int columna){
-		this.celdas[fila][columna].setEstado(columna);
+		this.celdas[fila][columna].setEstado(EstadoCelda.BANDERA);
 	}
 
+    public void marcarCelda(Celda celda) {
+        marcarCelda(celda.getFila(), celda.getColumna());
+    }
 
+    public void descubrirCelda(int fila, int columna) {
+        Celda celda = this.getCelda(fila, columna);
+        if (this.estado == EstadoTablero.SIN_INICIAR) {
+            llenarMinas(fila, columna);
+            this.estado = EstadoTablero.SIN_TERMINAR;
+        }
+        if (celda.getEstado() == EstadoCelda.CUBIERTA) {
+            celda.descubrir();
+            if (celda.getContenido() == 0) {
+                for (Celda adyacente : this.getOcultasAdyacentes(fila, columna)) {
+                    descubrirCelda(adyacente);
+                }
+            } else if (celda.getContenido() == 9) {                
+                this.estado = EstadoTablero.PERDIDO;
+            }
+        }
+    }
+    
+    public void descubrirCelda(Celda celda) {
+        descubrirCelda(celda.getFila(), celda.getColumna());
+    }
+    
+    public ArrayList<Celda> getOcultasAdyacentes(int fila, int columna) {
+        ArrayList<Celda> ocultas = new ArrayList<Celda>();
+        ArrayList<Celda> adyacentes = this.getAdyacentes(fila, columna);
+        for (Celda celda : adyacentes) {
+            if (celda.getEstado() == EstadoCelda.DESCUBIERTA) {
+            }
+            ocultas.add(celda);
+        }
+        return ocultas;
+    }
+    
+    public void checkEstado() {
+        for (int i = 0; i < this.filas; i++) {
+            for (int j = 0; j < this.columnas; j++) {
+                if (this.celdas[i][j].getEstado() == EstadoCelda.CUBIERTA && this.celdas[i][j].getContenido() != 9) {
+                    this.estado = EstadoTablero.SIN_TERMINAR;
+                    return;
+                }
+            }
+        }
+        this.estado = EstadoTablero.GANADO;
+    }
+    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
