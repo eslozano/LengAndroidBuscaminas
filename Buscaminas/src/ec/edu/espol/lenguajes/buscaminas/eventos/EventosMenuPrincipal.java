@@ -22,7 +22,7 @@ public class EventosMenuPrincipal implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-				switch (this.opcion){
+			switch (this.opcion){
 				case 0:{
 					//Se crea la ventana para escoger los datos de la nueva partida
 					Intent nuevaActividad = new Intent(this.contexto,NewGame.class);

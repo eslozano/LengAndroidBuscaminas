@@ -1,140 +1,127 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
-import java.util.ArrayList;
-import java.util.Random;
 
+import java.util.ArrayList;
+
+import ec.edu.espol.lenguajes.buscaminas.elementos.Celda;
+import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoCelda;
+import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoTablero;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Chronometer;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+import ec.edu.espol.lenguajes.buscaminas.R;
 
-
-public class Tablero extends Activity implements OnTouchListener{	
-	private Tableroview Tableroview;
-	private Celda[][] celdas;
-	private int columnas, filas, numMinas;
-	private ArrayList<Celda> celdaMinas;
-	private EstadoTablero estado;
+public class Tablero extends Activity implements OnTouchListener{
 	
-	public Tablero(int columnas, int filas, int numMinas) {
-		super();
-		this.columnas = columnas;
-		this.filas = filas;
-		this.numMinas = numMinas;
-		this.estado = EstadoTablero.SIN_INICIAR;
-		//this.tiempo = 0;
-		this.celdaMinas = new ArrayList<Celda>();		 
-		inicilizarCeldas();
+	 private TableroView tableroView;
+	 private Celda[][] celdas;
+     public static int columnas, filas, numMinas;
+     private EstadoTablero estado;
+     
+     public void nuevoTablero() {             
+             this.estado = EstadoTablero.SIN_INICIAR;
+             //this.tiempo = 0;
+     }       
+     
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tablero);		
+		
+		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutTablero);
+        tableroView = new TableroView(this);
+        tableroView.setOnTouchListener(this);   
+        layout.addView(tableroView); 
+        
+        Chronometer crono = (Chronometer) findViewById(R.id.chronometer1);
+        crono.setBase(SystemClock.elapsedRealtime());
+        crono.start();
+        
+        
+        nuevoTablero();
+        inicializarCeldas() ;
+       //this.disponerBombas();
+       //this.contarBombasPerimetro();
+        
 	}
 	
-	private void inicilizarCeldas() {
-		this.celdas = new Celda[this.filas][this.columnas];
-		for(int i=0;i< this.filas;i++)
-			for(int j=0;j<this.columnas;j++){
-				this.celdas[i][j]=new Celda(i,j);
-			}
-	}
-	
-	public void llenarMinas(int fila, int columna) {
-        Random r = new Random();
-        for (int i = 0; i < this.numMinas; i++) {
-            int rndFila, rndColumna;
-            do {
-                rndColumna = r.nextInt(this.columnas);
-                rndFila = r.nextInt(this.filas);
-            } while ((rndFila == fila && rndColumna == columna) || this.celdaMinas.contains(new Celda(rndFila, rndColumna)));
-            this.getCelda(rndFila, rndColumna).setContenido(9);//Colocar el valor de mina
-            this.celdaMinas.add(this.getCelda(rndFila, rndColumna));
-        }
-        for (Celda mina : this.celdaMinas) {
-            ArrayList<Celda> adyacentes = this.getAdyacentes(mina);
-            System.out.println("Fila: "+ mina.getFila() +"  Columna: " + mina.getColumna() + "  Adyacentes: " + adyacentes.size());
-            for (Celda adyacente : adyacentes) {
-                adyacente.incrementaContenido();                
-            }            
-        }
-    }
-
-	
-	public Celda getCelda(int fila, int columna) {
-		return this.celdas[fila][columna];		
-	}
-	
-	public ArrayList<Celda> getAdyacentes(int fila, int columna){
-		ArrayList<Celda> adyacentes = new ArrayList<Celda>();
-		for(int i=fila-1;i<fila + 2;i++)
-			for(int j=columna-1; j<columna + 2;j++){
-				if(i >= 0 && i < this.filas && j >= 0 && j < this.columnas && (i != fila || j != columna)){
-					adyacentes.add(this.getCelda(i,j));
-				}
-			}
-		return adyacentes;
-	}
-	
-	public ArrayList<Celda> getAdyacentes(Celda celda) {
-        return getAdyacentes(celda.getFila(), celda.getColumna());
-    }
-	
-	public void marcarCelda(int fila, int columna){
-		this.celdas[fila][columna].setEstado(EstadoCelda.BANDERA);
-	}
-
-    public void marcarCelda(Celda celda) {
-        marcarCelda(celda.getFila(), celda.getColumna());
-    }
-
-    public void descubrirCelda(int fila, int columna) {
-        Celda celda = this.getCelda(fila, columna);
-        if (this.estado == EstadoTablero.SIN_INICIAR) {
-            llenarMinas(fila, columna);
-            this.estado = EstadoTablero.SIN_TERMINAR;
-        }
-        if (celda.getEstado() == EstadoCelda.CUBIERTA) {
-            celda.descubrir();
-            if (celda.getContenido() == 0) {
-                for (Celda adyacente : this.getOcultasAdyacentes(fila, columna)) {
-                    descubrirCelda(adyacente);
-                }
-            } else if (celda.getContenido() == 9) {                
-                this.estado = EstadoTablero.PERDIDO;
-            }
-        }
-    }
-    
-    public void descubrirCelda(Celda celda) {
-        descubrirCelda(celda.getFila(), celda.getColumna());
-    }
-    
-    public ArrayList<Celda> getOcultasAdyacentes(int fila, int columna) {
-        ArrayList<Celda> ocultas = new ArrayList<Celda>();
-        ArrayList<Celda> adyacentes = this.getAdyacentes(fila, columna);
-        for (Celda celda : adyacentes) {
-            if (celda.getEstado() == EstadoCelda.DESCUBIERTA) {
-            }
-            ocultas.add(celda);
-        }
-        return ocultas;
-    }
-    
-    public void checkEstado() {
-        for (int i = 0; i < this.filas; i++) {
-            for (int j = 0; j < this.columnas; j++) {
-                if (this.celdas[i][j].getEstado() == EstadoCelda.CUBIERTA && this.celdas[i][j].getContenido() != 9) {
-                    this.estado = EstadoTablero.SIN_TERMINAR;
-                    return;
+	private void contarBombasPerimetro() {
+        for (int f = 0; f < Tablero.filas; f++) {
+            for (int c = 0; c < Tablero.columnas; c++) {
+                if (celdas[f][c].getContenido() == 0) {
+                    int cant = contarCoordenada(f, c);
+                    celdas[f][c].setContenido(cant);
                 }
             }
         }
-        this.estado = EstadoTablero.GANADO;
     }
-    
+	
+	int contarCoordenada(int fila, int columna) {
+        int total = 0;
+        if (fila - 1 >= 0 && columna - 1 >= 0) {
+            if (celdas[fila - 1][columna - 1].getContenido() == 80)
+                total++;
+        }
+        if (fila - 1 >= 0) {
+            if (celdas[fila - 1][columna].getContenido() == 80)
+                total++;
+        }
+        if (fila - 1 >= 0 && columna + 1 < Tablero.columnas) {
+            if (celdas[fila - 1][columna + 1].getContenido() == 80)
+                total++;
+        }
+
+        if (columna + 1 < Tablero.columnas) {
+            if (celdas[fila][columna + 1].getContenido() == 80)
+                total++;
+        }
+        if (fila + 1 < Tablero.filas && columna + 1 < Tablero.columnas) {
+            if (celdas[fila + 1][columna + 1].getContenido() == 80)
+                total++;
+        }
+
+        if (fila + 1 < Tablero.filas) {
+            if (celdas[fila + 1][columna].getContenido() == 80)
+                total++;
+        }
+        if (fila + 1 < Tablero.filas && columna - 1 >= 0) {
+            if (celdas[fila + 1][columna - 1].getContenido() == 80)
+                total++;
+        }
+        if (columna - 1 >= 0) {
+            if (celdas[fila][columna - 1].getContenido() == 80)
+                total++;
+        }
+        return total;
+    }
+	
+	private void disponerBombas() {
+        int cantidad = Tablero.numMinas ;
+        do {
+            int fila = (int) (Math.random() * Tablero.filas);
+            int columna = (int) (Math.random() * Tablero.columnas);
+            if (celdas[fila][columna].getContenido() == 0 && celdas[fila][columna].getEstado()!=EstadoCelda.DESCUBIERTA ) {
+                celdas[fila][columna].setContenido(80);
+                cantidad--;
+            }
+        } while (cantidad != 0);
+    }
+
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -142,73 +129,149 @@ public class Tablero extends Activity implements OnTouchListener{
 		return true;
 	}
 	
+	
+	class TableroView extends View {
+
+        public TableroView(Context context) {
+            super(context);
+        }
+        
+        protected void onDraw(Canvas canvas) {
+        	
+            int ancho = 0, filaact = 0;
+            if (canvas.getWidth() < canvas.getHeight())
+                ancho = tableroView.getWidth();
+            else
+                ancho = tableroView.getHeight();
+            
+            int anchocua = ancho / Tablero.columnas;
+                        
+            Paint paint = new Paint();
+            paint.setTextSize(20);
+            
+            Paint paint2 = new Paint();
+            paint2.setTextSize(20);
+            paint2.setTypeface(Typeface.DEFAULT_BOLD);
+            
+            Paint paintlinea1 = new Paint();
+            
+            for (int f = 0; f < Tablero.filas; f++) {
+                for (int c = 0; c < Tablero.columnas; c++) {
+                	if (celdas[f][c].getEstado() == EstadoCelda.CUBIERTA)
+                        paint.setARGB(153, 204, 204, 204);
+                    else if(celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA)
+                        paint.setARGB(255, 153, 153, 153);
+                	
+                	celdas[f][c].fijarxy(c * anchocua, filaact, anchocua);
+                	canvas.drawRect(c * anchocua, filaact, c * anchocua
+                             + anchocua - 2, filaact + anchocua - 2, paint);
+                	canvas.drawLine(c * anchocua, filaact, c * anchocua
+                             + anchocua, filaact, paintlinea1);
+                    canvas.drawLine(c * anchocua + anchocua - 1, filaact, c
+                             * anchocua + anchocua - 1, filaact + anchocua,
+                             paintlinea1);    
+                    
+                    
+                    if (celdas[f][c].getContenido() >= 1
+                            && celdas[f][c].getContenido() <= 8
+                            && celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA)
+                        canvas.drawText(
+                                String.valueOf(celdas[f][c].getContenido()), c
+                                        * anchocua + (anchocua / 2) - 8,
+                                filaact + anchocua / 2, paint2);
+
+                    if (celdas[f][c].getContenido() == 80
+                            && celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA) {
+                        Paint bomba = new Paint();
+                        bomba.setARGB(255, 255, 0, 0);
+                        canvas.drawCircle(c * anchocua + (anchocua / 2),
+                                filaact + (anchocua / 2), 8, bomba);
+                    }
+                }     
+                filaact = filaact + anchocua;
+            }
+            
+                     
+                        
+        }
+    }
+
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		if(this.estado==EstadoTablero.SIN_INICIAR ){
+			for (int f = 0; f < Tablero.filas; f++) {
+                for (int c = 0; c < Tablero.columnas; c++) {
+                    if (celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
+                    	celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);                    	
+                    }
+                }
+			}
+			this.disponerBombas();
+		    this.contarBombasPerimetro();			
+			this.estado=EstadoTablero.SIN_TERMINAR;
+		}
+			
+		if (this.estado==EstadoTablero.SIN_TERMINAR  )
+            for (int f = 0; f < Tablero.filas; f++) {
+                for (int c = 0; c < Tablero.columnas; c++) {
+                    if (celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
+                        celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);
+                        if (celdas[f][c].getContenido() == 80) {
+                            Toast.makeText(this, "Booooooooommmmmmmmmmmm",Toast.LENGTH_LONG).show();
+                            this.estado = EstadoTablero.PERDIDO;
+                        } else if (celdas[f][c].getContenido() == 0)
+                            recorrer(f, c);
+                        tableroView.invalidate();
+                    }
+                }
+            }
+        if (gano() && estado==EstadoTablero.GANADO) {
+            Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show();
+        }
+
+        return true;
+	}     
 	
+	private boolean gano() {
+        int cant = 0;
+        int celdasSinMina=0;
+        celdasSinMina=((Tablero.filas*Tablero.columnas)-Tablero.numMinas);
+        for (int f = 0; f < Tablero.filas; f++)
+            for (int c = 0; c < Tablero.columnas; c++)
+                if (celdas[f][c].getEstado()==EstadoCelda.DESCUBIERTA)
+                    cant++;
+        if (cant == celdasSinMina )
+            return true;
+        else
+            return false;
+    }
+    
+	private void recorrer(int fil, int col) {
+        if (fil >= 0 && fil < filas && col >= 0 && col < columnas) {
+            if (celdas[fil][col].getContenido() == 0) {
+            	celdas[fil][col].setEstado(EstadoCelda.DESCUBIERTA);
+            	celdas[fil][col].setContenido(50);
+                recorrer(fil, col + 1);
+                recorrer(fil, col - 1);
+                recorrer(fil + 1, col);
+                recorrer(fil - 1, col);
+                recorrer(fil - 1, col - 1);
+                recorrer(fil - 1, col + 1);
+                recorrer(fil + 1, col + 1);
+                recorrer(fil + 1, col - 1);
+            } else if (celdas[fil][col].getContenido() >= 1
+                    && celdas[fil][col].getContenido() <= 8) {
+            	celdas[fil][col].setEstado(EstadoCelda.DESCUBIERTA);;
+            }
+        }
+    }
 		
 	
-	 class Tableroview extends View {
-
-	        public Tableroview(Context context) {
-	            super(context);
-	        }
-
-	        protected void onDraw(Canvas canvas) {
-	            canvas.drawRGB(0, 0, 0);
-	            int ancho = 0;
-	            if (canvas.getWidth() < canvas.getHeight())
-	                ancho = Tableroview.getWidth();
-	            else
-	                ancho = Tableroview.getHeight();
-	            int anchocua = ancho / 8;
-	            Paint paint = new Paint();
-	            paint.setTextSize(20);
-	            Paint paint2 = new Paint();
-	            paint2.setTextSize(20);
-	            paint2.setTypeface(Typeface.DEFAULT_BOLD);
-	            paint2.setARGB(255, 0, 0, 255);
-	            Paint paintlinea1 = new Paint();
-	            paintlinea1.setARGB(255, 255, 255, 255);
-	            int filaact = 0;
-	            for (int f = 0; f < 8; f++) {
-	                for (int c = 0; c < 8; c++) {
-	                    celdas[f][c].fijarxy(c * anchocua, filaact, anchocua);
-	                    if (celdas[f][c].destapado == false)
-	                        paint.setARGB(153, 204, 204, 204);
-	                    else
-	                        paint.setARGB(255, 153, 153, 153);
-	                    canvas.drawRect(c * anchocua, filaact, c * anchocua
-	                            + anchocua - 2, filaact + anchocua - 2, paint);
-	                    // linea blanca
-	                    canvas.drawLine(c * anchocua, filaact, c * anchocua
-	                            + anchocua, filaact, paintlinea1);
-	                    canvas.drawLine(c * anchocua + anchocua - 1, filaact, c
-	                            * anchocua + anchocua - 1, filaact + anchocua,
-	                            paintlinea1);
-
-	                    if (celdas[f][c].contenido >= 1
-	                            && celdas[f][c].contenido <= 8
-	                            && celdas[f][c].destapado)
-	                        canvas.drawText(
-	                                String.valueOf(celdas[f][c].contenido), c
-	                                        * anchocua + (anchocua / 2) - 8,
-	                                filaact + anchocua / 2, paint2);
-
-	                    if (celdas[f][c].contenido == 80
-	                            && celdas[f][c].destapado) {
-	                        Paint bomba = new Paint();
-	                        bomba.setARGB(255, 255, 0, 0);
-	                        canvas.drawCircle(c * anchocua + (anchocua / 2),
-	                                filaact + (anchocua / 2), 8, bomba);
-	                    }
-
-	                }
-	                filaact = filaact + anchocua;
-	            }
-	        }
-	    }
+	private void inicializarCeldas() {
+        this.celdas = new Celda[this.filas][this.columnas];
+        for(int i=0;i< this.filas;i++)
+                for(int j=0;j<this.columnas;j++){
+                        this.celdas[i][j]=new Celda(i,j);
+                }
 }
-	
+}
