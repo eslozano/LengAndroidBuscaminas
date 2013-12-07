@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -158,9 +160,16 @@ public class Tablero extends Activity implements OnTouchListener{
             for (int f = 0; f < Tablero.filas; f++) {
                 for (int c = 0; c < Tablero.columnas; c++) {
                 	if (celdas[f][c].getEstado() == EstadoCelda.CUBIERTA)
-                        paint.setARGB(153, 204, 204, 204);
-                    else if(celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA)
-                        paint.setARGB(255, 153, 153, 153);
+                        paint.setARGB(200, 200, 200, 255);
+                    else if(celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA){
+                        if (celdas[f][c].getContenido() >= 1
+                                && celdas[f][c].getContenido() <= 8)
+                        {
+                        	paint.setARGB(160, 255,255, 160);
+                        }else{
+                        	paint.setARGB(160, 0,0, 255);
+                        }
+                    }
                 	
                 	celdas[f][c].fijarxy(c * anchocua, filaact, anchocua);
                 	canvas.drawRect(c * anchocua, filaact, c * anchocua
@@ -182,10 +191,13 @@ public class Tablero extends Activity implements OnTouchListener{
 
                     if (celdas[f][c].getContenido() == 80
                             && celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA) {
-                        Paint bomba = new Paint();
+                    	//Picture p = new Picture();
+                    	//canvas.drawPicture() 
+                    	Paint bomba = new Paint();
                         bomba.setARGB(255, 255, 0, 0);
                         canvas.drawCircle(c * anchocua + (anchocua / 2),
                                 filaact + (anchocua / 2), 8, bomba);
+                        
                     }
                 }     
                 filaact = filaact + anchocua;
@@ -273,5 +285,5 @@ public class Tablero extends Activity implements OnTouchListener{
                 for(int j=0;j<this.columnas;j++){
                         this.celdas[i][j]=new Celda(i,j);
                 }
-}
+	}
 }

@@ -38,6 +38,14 @@
             android:name="ec.edu.espol.lenguajes.buscaminas.Tablero"
             android:label="@string/title_activity_tablero" >
         </activity>
+        <activity
+            android:name="ec.edu.espol.lenguajes.buscaminas.Custom"
+            android:label="@string/title_activity_custom" >
+        </activity>
+        <activity
+            android:name="ec.edu.espol.lenguajes.buscaminas.Custom_tablero"
+            android:label="@string/title_activity_custom_tablero" >
+        </activity>
     </application>
 
 </manifest>

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/fondo_tablero02"
+    android:background="@drawable/fondo_goku"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".Tablero" >
@@ -11,10 +11,12 @@
         android:id="@+id/chronometer1"
         android:layout_width="108dp"
         android:layout_height="69dp"
-        android:background="@drawable/dragon_radar"
+        android:typeface="sans"
+        android:textStyle="bold"
         android:gravity="center"
+        android:shadowColor="@color/blanco"
         android:textColor="@color/amarillo"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:id="@+id/layoutTablero"

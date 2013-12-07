@@ -1,22 +1,33 @@
 package ec.edu.espol.lenguajes.buscaminas.eventos;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import ec.edu.espol.lenguajes.buscaminas.NewGame;
+import ec.edu.espol.lenguajes.buscaminas.R;
 import ec.edu.espol.lenguajes.buscaminas.Tablero;
 
-public class EventosMenuPartida  implements OnClickListener{
+public class EventosMenuPartida   implements OnClickListener{
 
 	private int opcion;
 	private Context contexto;
+	private NewGame c;
 	public static int filadet, columnadet;
+	public AlertDialog.Builder alertDialogBuilder;
 	
 	public EventosMenuPartida(Context contexto, int opcion) {
 		super();
 		this.contexto = contexto;
 		this.opcion=opcion;
+		
+		
 	}
 	
 	@Override
@@ -48,14 +59,45 @@ public class EventosMenuPartida  implements OnClickListener{
 			break;
 		}
 		case 3:{
-			Tablero.filas=50;
-			Tablero.columnas=50;
-			Intent nuevaActividad = new Intent(this.contexto,Tablero.class);
-			this.contexto.startActivity(nuevaActividad);
-			break;
-		}	
 			
+			
+			
+			
+			LayoutInflater li = LayoutInflater.from(contexto);
+			View prompt = li.inflate(R.layout.custom, null);
+			alertDialogBuilder = new AlertDialog.Builder(contexto);
+			alertDialogBuilder.setView(prompt);
+			
+			alertDialogBuilder.setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	    		
+    			public void onClick(DialogInterface dialog,int id) {
+    				String valor1=c.alto.getText().toString();
+    		        String valor2=c.ancho.getText().toString();
+    		        String valor3=c.minas.getText().toString();
+    		        
+    		        
+    				
+    				
+    				Tablero.filas=Integer.parseInt(valor1);
+    				Tablero.columnas=Integer.parseInt(valor2);
+    				Tablero.numMinas=Integer.parseInt(valor3);
+    				
+    				Intent i = new Intent(contexto, Tablero.class );
+    		        contexto.startActivity(i);
+    			}
+    		})
+    		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog,int id) {
+    		// Cancelamos el cuadro de dialogo
+    		  dialog.cancel();
+    		}
+    		});
+    		
+        	AlertDialog alertDialog = alertDialogBuilder.create();
+    		alertDialog.show();
+    	
+        	break;
+        	}
 		}
 	}
-
 }

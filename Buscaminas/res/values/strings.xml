@@ -15,5 +15,11 @@
     <string name="avanzado">Advanced</string>
     <string name="usuario">Custom</string>
     <string name="title_activity_tablero">Buscaminas</string>
+    <string name="title_activity_custom">Custom</string>
+    <string name="alto_custom">Alto (9-24)</string>
+    <string name="ancho_custom">Ancho(9-30)</string>
+    <string name="minas_custom">Minas(10-668)</string>
+    <string name="aceptar_custom">Aceptar</string>
+    <string name="title_activity_custom_tablero">Custom_tablero</string>
 
 </resources>
