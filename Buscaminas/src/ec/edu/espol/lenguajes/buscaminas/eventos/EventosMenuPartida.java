@@ -61,7 +61,7 @@ public class EventosMenuPartida   implements OnClickListener{
 		case 3:{
 			
 			
-			
+		/*	
 			
 			LayoutInflater li = LayoutInflater.from(contexto);
 			View prompt = li.inflate(R.layout.custom, null);
@@ -71,16 +71,8 @@ public class EventosMenuPartida   implements OnClickListener{
 			alertDialogBuilder.setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	    		
     			public void onClick(DialogInterface dialog,int id) {
-    				String valor1=c.alto.getText().toString();
-    		        String valor2=c.ancho.getText().toString();
-    		        String valor3=c.minas.getText().toString();
-    		        
-    		        
     				
     				
-    				Tablero.filas=Integer.parseInt(valor1);
-    				Tablero.columnas=Integer.parseInt(valor2);
-    				Tablero.numMinas=Integer.parseInt(valor3);
     				
     				Intent i = new Intent(contexto, Tablero.class );
     		        contexto.startActivity(i);
@@ -95,7 +87,7 @@ public class EventosMenuPartida   implements OnClickListener{
     		
         	AlertDialog alertDialog = alertDialogBuilder.create();
     		alertDialog.show();
-    	
+    	*/
         	break;
         	}
 		}

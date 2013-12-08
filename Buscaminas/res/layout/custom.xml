@@ -2,72 +2,101 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toastLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="600dp"
+    android:layout_height="1000dp"
+    android:background="@drawable/fondo_custom2"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Custom" >
 
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignLeft="@+id/editText2"
-        android:inputType="number"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:inputType="number"
-        android:ems="10" />
-
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewalto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="52dp"
-        android:text="@string/minas_custom" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="83dp"
+        android:text="@string/alto_custom"
+        android:textColor="@color/blanco" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="145dp"
-        android:text="@string/ancho_custom" />
+        android:layout_alignLeft="@+id/textViewalto"
+        android:layout_below="@+id/seekBarancho"
+        android:layout_marginTop="33dp"
+        android:text="@string/ancho_custom"
+        android:textColor="@color/blanco" />
 
-    <EditText android:id="@+id/editText1"
-         android:layout_width="wrap_content" 
-         android:layout_height="wrap_content" 
-         android:layout_alignBottom="@+id/textView3" 
-         android:layout_alignLeft="@+id/editText3" 
-        android:inputType="number"
-         android:ems="10" />
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+    <SeekBar
+        android:id="@+id/seekBarancho"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView3"
-        android:layout_marginLeft="29dp"
-        android:layout_marginTop="83dp"
-        android:text="@string/alto_custom" />
+        android:layout_alignRight="@+id/seekBaralto"
+        android:layout_below="@+id/textViewalto"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="65dp" />
 
-    
+    <SeekBar
+        android:id="@+id/seekBaralto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewalto"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="249dp"
+        android:layout_marginTop="29dp" />
+
+    <TextView
+        android:id="@+id/textViewancho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:text="9"
+        android:textColor="@color/blanco" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewalto"
+        android:layout_alignBottom="@+id/textViewalto"
+        android:layout_toLeftOf="@+id/textViewancho"
+        android:text="9"
+        android:textColor="@color/blanco" />
+
+    <TextView
+        android:id="@+id/textViewminas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBarminas"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="10"
+        android:textColor="@color/blanco" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewminas"
+        android:layout_alignBottom="@+id/textViewminas"
+        android:layout_alignLeft="@+id/textView2"
+        android:text="@string/minas_custom"
+        android:textColor="@color/blanco" />
+
+    <SeekBar
+        android:id="@+id/seekBarminas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/seekBarancho"
+        android:layout_alignRight="@+id/seekBarancho"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="37dp" />
 
 </RelativeLayout>

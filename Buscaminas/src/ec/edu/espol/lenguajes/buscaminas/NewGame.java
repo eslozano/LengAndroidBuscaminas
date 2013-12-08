@@ -13,27 +13,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewGame extends Activity {
 	
 	public Context contexto;
 	protected TextView fontcustom;
-	public EditText alto,ancho,minas; 
-	public int n1,n2,n3;
-	
+	public AlertDialog.Builder alertDialogBuilder;
+	public int alto=9, ancho=9, minas=10,var=658;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_game);			
+		contexto=this;
 		
-		alto=(EditText)findViewById(R.id.editText3);
-        ancho=(EditText)findViewById(R.id.editText2);
-        minas=(EditText)findViewById(R.id.editText1);
-    
 		 
 	
 		Button 	buttonPrincipiante=	(Button)
@@ -53,9 +51,13 @@ public class NewGame extends Activity {
 		
 		Button 	buttonCustom=	(Button)
 				findViewById(R.id.usuario);				        
-		buttonCustom.setOnClickListener(
-				new EventosMenuPartida(this, 3));
-		
+		buttonCustom.setOnClickListener(new Button.OnClickListener() {  
+        public void onClick(View v)
+            {
+                //perform action
+        		abrir_dialogos();
+            }
+         });
 		
 	}
 				
@@ -65,8 +67,141 @@ public class NewGame extends Activity {
 		getMenuInflater().inflate(R.menu.new_game, menu);
 		return true;
 	}
-	public void capturar_contenidos(){
-		
+				
+	public void abrir_dialogos(){
+		 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	     final View layout = inflater.inflate(R.layout.custom, (ViewGroup) findViewById(R.id.toastLayout));
+	     
+	     AlertDialog.Builder builder = new AlertDialog.Builder(NewGame.this).setView(layout)
+	     
+	     .setPositiveButton("OK",
+	                new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog,
+	                    int whichButton) {
+	            	Tablero.columnas=ancho;
+		        	Tablero.filas=alto;
+		        	Tablero.numMinas=minas;
+		        	Intent i = new Intent(contexto, Tablero.class );
+			        contexto.startActivity(i);
+		            
+	            }
+	        });
+	     
+	     
+	     
+	     
+	     
+	     
+	     final AlertDialog alertDialog = builder.create();
+	     alertDialog.show();
+	     
+	     SeekBar sbalto = (SeekBar)layout.findViewById(R.id.seekBaralto);  
+	     final SeekBar sbancho = (SeekBar)layout.findViewById(R.id.seekBarancho);  
+	     final SeekBar sbminas = (SeekBar)layout.findViewById(R.id.seekBarminas);
+	     final TextView txtalto = (TextView)layout.findViewById(R.id.textView4);
+	     final TextView txtancho = (TextView)layout.findViewById(R.id.textViewancho);
+	     final TextView txtminas = (TextView)layout.findViewById(R.id.textViewminas);
+	     
+	     sbminas.setEnabled(false);
+	     sbancho.setEnabled(false);
+ 
+	     
+	     
+	     
+
+	     sbalto.setProgress(1); //Fijamos SeekBar al un valor anterior...
+	     sbancho.setProgress(1);
+	     sbminas.setProgress(1);
+	     sbalto.setMax(15);
+	     sbancho.setMax(21);
+	     sbminas.setMax(var);
+	     
+	     
+	     
+	     
+	     
+	     
+
+	     sbalto.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+	         
+	    	 
+	    	 
+	    	 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+	                       //Log.d("MENSAJE", "On progress seekbar");
+	          int valor = progress; //grabamos el nuevo valor
+	          txtalto.setText(progress + 9 + ""); 
+	                //Hacer lo que queramos con con el nuevo valor 
+	          alto=Integer.parseInt(txtalto.getText().toString());
+	          sbancho.setEnabled(true);
+
+	         }
+	    	 
+	    	 
+	    	 
+	    	 
+	   public void onStartTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	   public void onStopTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	     });
+	     
+	     
+	     sbancho.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+	         
+	    	 
+	    	 
+	    	 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+	                       //Log.d("MENSAJE", "On progress seekbar");
+	          int valor = progress; //grabamos el nuevo valor
+	          txtancho.setText(progress + 9 + ""); 
+	                //Hacer lo que queramos con con el nuevo valor 
+	          ancho=Integer.parseInt(txtancho.getText().toString());
+	          sbminas.setEnabled(true);
+
+	         }
+	    	 
+	    	 
+	    	 
+	    	 
+	   public void onStartTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	   public void onStopTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	     });
+	     
+	     sbminas.setMax((alto * ancho )-10);
+	     
+	     sbminas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+	         
+	    	 
+	    	 
+	    	 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+	                       //Log.d("MENSAJE", "On progress seekbar");
+	          int valor = progress; //grabamos el nuevo valor
+	          
+	          txtminas.setText(progress + 10 + ""); 
+	                //Hacer lo que queramos con con el nuevo valor 
+	          minas=Integer.parseInt(txtminas.getText().toString());
+	          
+
+	         }
+	    	 
+	    	 
+	    	 
+	    	 
+	   public void onStartTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	   public void onStopTrackingTouch(SeekBar seekBar) {
+	    // TODO Auto-generated method stub
+	   }
+	     });
+	     
+	    
 	}
 	
 	
