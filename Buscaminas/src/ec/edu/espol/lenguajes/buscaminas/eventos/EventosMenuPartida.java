@@ -40,7 +40,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			ScoreHandler.setTempDificultad(DificultadScore.FACIL, this.contexto);
 			Tablero.filas=5;
 			Tablero.columnas=5;
-			Tablero.numMinas=8;
+			Tablero.numMinas=3;
 			Intent nuevaActividad = new Intent(this.contexto,Tablero.class);
 			this.contexto.startActivity(nuevaActividad);
 			break;

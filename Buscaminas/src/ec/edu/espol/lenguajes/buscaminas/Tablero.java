@@ -20,11 +20,13 @@ import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -32,43 +34,54 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class Tablero extends Activity implements OnTouchListener{
+public class Tablero extends Activity implements OnClickListener{
 	
-	 private TableroView tableroView;
-	 private Celda[][] celdas;
+	 public TableroView tableroView;
+	 public Celda[][] celdas;
      public static int columnas, filas, numMinas;
-     private EstadoTablero estado;
+     public EstadoTablero estado;
      private String name;
+     public Chronometer crono;
+     private MotionEvent event;
+     private GestureDetector detector;
+     private View.OnTouchListener mGestureListener;
      
      public void nuevoTablero() {             
              this.estado = EstadoTablero.SIN_INICIAR;
              //this.tiempo = 0;
      }       
      
-
+     @Override
+ 	public void onClick(View v) {
+ 		// TODO Auto-generated method stub
+ 		
+ 	}
+     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tablero);		
-		
+				         
+		detector = new GestureDetector(this, new DetectorGestos(this));
+		mGestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return detector.onTouchEvent(event);
+            }
+		};
 		LinearLayout layout = (LinearLayout) findViewById(R.id.layoutTablero);
         tableroView = new TableroView(this);
-        tableroView.setOnTouchListener(this);   
+        
+        tableroView.setOnClickListener(this);
+        tableroView.setOnTouchListener(mGestureListener);
+        
         layout.addView(tableroView); 
         
-        Chronometer crono = (Chronometer) findViewById(R.id.chronometer1);
-        crono.setBase(SystemClock.elapsedRealtime());
-        crono.start();
-        
-        
         nuevoTablero();
-        inicializarCeldas() ;
-       //this.disponerBombas();
-       //this.contarBombasPerimetro();
+        inicializarCeldas() ;       
         
 	}
 	
-	private void contarBombasPerimetro() {
+	public void contarBombasPerimetro() {
         for (int f = 0; f < Tablero.filas; f++) {
             for (int c = 0; c < Tablero.columnas; c++) {
                 if (celdas[f][c].getContenido() == 0) {
@@ -118,7 +131,7 @@ public class Tablero extends Activity implements OnTouchListener{
         return total;
     }
 	
-	private void disponerBombas() {
+	public void disponerBombas() {
         int cantidad = Tablero.numMinas ;
         do {
             int fila = (int) (Math.random() * Tablero.filas);
@@ -133,7 +146,6 @@ public class Tablero extends Activity implements OnTouchListener{
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.tablero, menu);
 		return true;
 	}
@@ -144,7 +156,6 @@ public class Tablero extends Activity implements OnTouchListener{
         public TableroView(Context context) {
             super(context);
         }
-        
         protected void onDraw(Canvas canvas) {
         	
             int ancho = 0, filaact = 0;
@@ -162,6 +173,8 @@ public class Tablero extends Activity implements OnTouchListener{
             paint2.setTextSize(20);
             paint2.setTypeface(Typeface.DEFAULT_BOLD);
             
+            Paint paint3= new Paint();
+            
             Paint paintlinea1 = new Paint();
             
             for (int f = 0; f < Tablero.filas; f++) {
@@ -169,13 +182,14 @@ public class Tablero extends Activity implements OnTouchListener{
                 	if (celdas[f][c].getEstado() == EstadoCelda.CUBIERTA)
                         paint.setARGB(200, 200, 200, 255);
                     else if(celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA){
-                        if (celdas[f][c].getContenido() >= 1
-                                && celdas[f][c].getContenido() <= 8)
-                        {
+                        if (celdas[f][c].getContenido() >= 1 && celdas[f][c].getContenido() <= 8){
                         	paint.setARGB(160, 255,255, 160);
                         }else{
                         	paint.setARGB(160, 0,0, 255);
                         }
+                    }
+                    else if(celdas[f][c].getEstado() == EstadoCelda.BANDERA){
+                    	paint.setARGB(209,209,209,0);
                     }
                 	
                 	celdas[f][c].fijarxy(c * anchocua, filaact, anchocua);
@@ -195,6 +209,14 @@ public class Tablero extends Activity implements OnTouchListener{
                                 String.valueOf(celdas[f][c].getContenido()), c
                                         * anchocua + (anchocua / 2) - 8,
                                 filaact + anchocua / 2, paint2);
+                    
+                    if(celdas[f][c].getEstado() == EstadoCelda.BANDERA){
+                    	Paint bandera = new Paint();
+                        bandera.setARGB(255, 0, 0, 0);
+                        canvas.drawCircle(c * anchocua + (anchocua / 2),
+                                filaact + (anchocua / 2), 8, bandera);                     	
+                    }
+                                     
 
                     if (celdas[f][c].getContenido() == 80
                             && celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA) {
@@ -203,9 +225,9 @@ public class Tablero extends Activity implements OnTouchListener{
                     	Paint bomba = new Paint();
                         bomba.setARGB(255, 255, 0, 0);
                         canvas.drawCircle(c * anchocua + (anchocua / 2),
-                                filaact + (anchocua / 2), 8, bomba);
-                        
+                                filaact + (anchocua / 2), 8, bomba);                        
                     }
+                    
                 }     
                 filaact = filaact + anchocua;
             }
@@ -213,49 +235,11 @@ public class Tablero extends Activity implements OnTouchListener{
                      
                         
         }
+         
+          
     }
 
-	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		if(this.estado==EstadoTablero.SIN_INICIAR ){
-			for (int f = 0; f < Tablero.filas; f++) {
-                for (int c = 0; c < Tablero.columnas; c++) {
-                    if (celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
-                    	celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);                    	
-                    }
-                }
-			}
-			this.disponerBombas();
-		    this.contarBombasPerimetro();			
-			this.estado=EstadoTablero.SIN_TERMINAR;
-		}
-			
-		if (this.estado==EstadoTablero.SIN_TERMINAR  )
-            for (int f = 0; f < Tablero.filas; f++) {
-                for (int c = 0; c < Tablero.columnas; c++) {
-                    if (celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
-                        celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);
-                        if (celdas[f][c].getContenido() == 80) {
-                            Toast.makeText(this, "Booooooooommmmmmmmmmmm",Toast.LENGTH_LONG).show();
-                            this.estado = EstadoTablero.PERDIDO;
-                        } else if (celdas[f][c].getContenido() == 0)
-                            recorrer(f, c);
-                        tableroView.invalidate();
-                    }
-                }
-            }
-        if (gano() && estado==EstadoTablero.GANADO) {
-            Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show();
-            //Chequear Tiempo guardado
-            int time =getTiempo();
-            if(ScoreHandler.checkCurrentScore(time, Tablero.this)){
-            	ScoreHandler.setTempTime(time, Tablero.this);
-            	abrirDialogo();
-            }
-        }
-
-        return true;
-	}     
+	
 	
 
 	private int getTiempo() {
@@ -321,23 +305,26 @@ public class Tablero extends Activity implements OnTouchListener{
 	}
 
 
-	private boolean gano() {
+	public boolean gano() {
         int cant = 0;
         int celdasSinMina=0;
         celdasSinMina=((Tablero.filas*Tablero.columnas)-Tablero.numMinas);
+        
         for (int f = 0; f < Tablero.filas; f++)
             for (int c = 0; c < Tablero.columnas; c++)
                 if (celdas[f][c].getEstado()==EstadoCelda.DESCUBIERTA)
                     cant++;
-        if (cant == celdasSinMina )
+        if (cant == celdasSinMina ){
+        	this.estado=EstadoTablero.GANADO;
             return true;
+	    }
         else
             return false;
     }
     
-	private void recorrer(int fil, int col) {
+	public void recorrer(int fil, int col) {
         if (fil >= 0 && fil < filas && col >= 0 && col < columnas) {
-            if (celdas[fil][col].getContenido() == 0) {
+            if (celdas[fil][col].getContenido() == 0 && celdas[fil][col].getEstado()!=EstadoCelda.BANDERA) {
             	celdas[fil][col].setEstado(EstadoCelda.DESCUBIERTA);
             	celdas[fil][col].setContenido(50);
                 recorrer(fil, col + 1);
@@ -349,11 +336,12 @@ public class Tablero extends Activity implements OnTouchListener{
                 recorrer(fil + 1, col + 1);
                 recorrer(fil + 1, col - 1);
             } else if (celdas[fil][col].getContenido() >= 1
-                    && celdas[fil][col].getContenido() <= 8) {
+                    && celdas[fil][col].getContenido() <= 8 && celdas[fil][col].getEstado()!=EstadoCelda.BANDERA) {
             	celdas[fil][col].setEstado(EstadoCelda.DESCUBIERTA);;
             }
         }
     }
+	
 		
 	
 	private void inicializarCeldas() {
