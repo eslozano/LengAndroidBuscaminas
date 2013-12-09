@@ -22,6 +22,11 @@
     <string name="aceptar_custom">Aceptar</string>
     <string name="title_activity_custom_tablero">Custom_tablero</string>
     <string name="default_name">anonymous</string>
+    <string name="default_text">anonymous 999</string>
+    <string name="label_facil">facil</string>
+    <string name="label_medio">medio</string>
+    <string name="label_dificil">dificil</string>
+    <string name="button_text_borrarTiempos">Borrar Tiempos</string>
     
 
 </resources>

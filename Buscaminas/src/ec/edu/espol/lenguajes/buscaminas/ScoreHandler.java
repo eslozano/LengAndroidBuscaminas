@@ -136,4 +136,17 @@ public class ScoreHandler {
 		setScore(score, context);
 	}
 	
+	public static void deleteScores(Context context){
+		SharedPreferences prefs = context.getSharedPreferences("puntajes",
+				Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs.edit();
+		editor.remove("nameEasy");
+		editor.remove("timeEasy");
+		editor.remove("nameNormal");
+		editor.remove("timeNormal");
+		editor.remove("nameHard");
+		editor.remove("timeHard");
+		editor.commit();
+	}
+	
 }
