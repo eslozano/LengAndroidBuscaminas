@@ -61,34 +61,7 @@ public class EventosMenuPartida   implements OnClickListener{
 		case 3:{
 			
 			
-		/*	
-			
-			LayoutInflater li = LayoutInflater.from(contexto);
-			View prompt = li.inflate(R.layout.custom, null);
-			alertDialogBuilder = new AlertDialog.Builder(contexto);
-			alertDialogBuilder.setView(prompt);
-			
-			alertDialogBuilder.setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-	    		
-    			public void onClick(DialogInterface dialog,int id) {
-    				
-    				
-    				
-    				Intent i = new Intent(contexto, Tablero.class );
-    		        contexto.startActivity(i);
-    			}
-    		})
-    		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog,int id) {
-    		// Cancelamos el cuadro de dialogo
-    		  dialog.cancel();
-    		}
-    		});
-    		
-        	AlertDialog alertDialog = alertDialogBuilder.create();
-    		alertDialog.show();
-    	*/
-        	break;
+		        	break;
         	}
 		}
 	}

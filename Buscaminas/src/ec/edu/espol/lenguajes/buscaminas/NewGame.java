@@ -132,6 +132,7 @@ public class NewGame extends Activity {
 	          txtalto.setText(progress + 9 + ""); 
 	                //Hacer lo que queramos con con el nuevo valor 
 	          alto=Integer.parseInt(txtalto.getText().toString());
+	          sbminas.setMax((alto * ancho)-62);
 	          sbancho.setEnabled(true);
 
 	         }
@@ -159,6 +160,8 @@ public class NewGame extends Activity {
 	                //Hacer lo que queramos con con el nuevo valor 
 	          ancho=Integer.parseInt(txtancho.getText().toString());
 	          sbminas.setEnabled(true);
+	          sbminas.setMax((alto * ancho)-62);
+	 	     
 
 	         }
 	    	 
@@ -173,7 +176,6 @@ public class NewGame extends Activity {
 	   }
 	     });
 	     
-	     sbminas.setMax((alto * ancho )-10);
 	     
 	     sbminas.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 	         
