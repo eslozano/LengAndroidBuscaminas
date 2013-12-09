@@ -21,5 +21,7 @@
     <string name="minas_custom">Minas(10-668)</string>
     <string name="aceptar_custom">Aceptar</string>
     <string name="title_activity_custom_tablero">Custom_tablero</string>
+    <string name="default_name">anonymous</string>
+    
 
 </resources>

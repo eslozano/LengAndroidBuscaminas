@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import ec.edu.espol.lenguajes.buscaminas.DificultadScore;
 import ec.edu.espol.lenguajes.buscaminas.NewGame;
 import ec.edu.espol.lenguajes.buscaminas.R;
+import ec.edu.espol.lenguajes.buscaminas.ScoreHandler;
 import ec.edu.espol.lenguajes.buscaminas.Tablero;
 
 public class EventosMenuPartida   implements OnClickListener{
@@ -35,6 +37,7 @@ public class EventosMenuPartida   implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch (this.opcion){
 		case 0:{
+			ScoreHandler.setTempDificultad(DificultadScore.FACIL, this.contexto);
 			Tablero.filas=5;
 			Tablero.columnas=5;
 			Tablero.numMinas=8;
@@ -43,6 +46,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			break;
 		}
 		case 1:{
+			ScoreHandler.setTempDificultad(DificultadScore.MEDIO, this.contexto);
 			Tablero.filas=8;
 			Tablero.columnas=8;
 			Tablero.numMinas=10;
@@ -51,6 +55,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			break;
 		}
 		case 2:{
+			ScoreHandler.setTempDificultad(DificultadScore.MEDIO, this.contexto);
 			Tablero.filas=11;
 			Tablero.columnas=11;
 			Tablero.numMinas=20;

@@ -9,22 +9,28 @@ import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoTablero;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import ec.edu.espol.lenguajes.buscaminas.R;
 
 public class Tablero extends Activity implements OnTouchListener{
 	
@@ -32,6 +38,7 @@ public class Tablero extends Activity implements OnTouchListener{
 	 private Celda[][] celdas;
      public static int columnas, filas, numMinas;
      private EstadoTablero estado;
+     private String name;
      
      public void nuevoTablero() {             
              this.estado = EstadoTablero.SIN_INICIAR;
@@ -239,11 +246,81 @@ public class Tablero extends Activity implements OnTouchListener{
             }
         if (gano() && estado==EstadoTablero.GANADO) {
             Toast.makeText(this, "Ganaste", Toast.LENGTH_LONG).show();
+            //Chequear Tiempo guardado
+            int time =getTiempo();
+            if(ScoreHandler.checkCurrentScore(time, Tablero.this)){
+            	ScoreHandler.setTempTime(time, Tablero.this);
+            	abrirDialogo();
+            }
         }
 
         return true;
 	}     
 	
+
+	private int getTiempo() {
+		int tiempo=0;
+		Chronometer crono = (Chronometer) findViewById(R.id.chronometer1);
+		String chronoText = crono.getText().toString();
+		String array[] = chronoText.split(":");
+		if (array.length == 2) {
+			tiempo = Integer.parseInt(array[0]) * 60 
+					+ Integer.parseInt(array[1]) * 1000;
+		} else if (array.length == 3) {
+			tiempo = Integer.parseInt(array[0]) * 60 * 60  
+					+ Integer.parseInt(array[1]) * 60 * 
+					+ Integer.parseInt(array[2]) ;
+		}		
+		return tiempo;
+	}
+
+
+	public void abrirDialogo() {
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		final View layout = inflater.inflate(R.layout.score_name_layout,
+				(ViewGroup) findViewById(R.id.scorenaming));
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(Tablero.this)
+				.setView(layout)
+
+				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					
+
+					public void onClick(DialogInterface dialog, int whichButton) {
+						/*
+						 * Tablero.columnas=ancho; Tablero.filas=alto;
+						 * Tablero.numMinas=minas; Intent i = new
+						 * Intent(contexto, Tablero.class );
+						 * contexto.startActivity(i);
+						 */
+						ScoreHandler.setNewScore(name,
+								ScoreHandler.getTempTime(Tablero.this),
+								Tablero.this);
+					}
+				});
+
+		final AlertDialog alertDialog = builder.create();
+		alertDialog.show();
+
+		EditText texto = (EditText) layout.findViewById(R.id.scorename);
+
+		texto.addTextChangedListener(new TextWatcher() {
+			public void afterTextChanged(Editable s) {
+				name = s.toString();
+			}
+
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+		});
+
+	}
+
+
 	private boolean gano() {
         int cant = 0;
         int celdasSinMina=0;

@@ -78,6 +78,7 @@ public class NewGame extends Activity {
 	                new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog,
 	                    int whichButton) {
+	            	ScoreHandler.setTempDificultad(DificultadScore.INVALIDO, contexto);
 	            	Tablero.columnas=ancho;
 		        	Tablero.filas=alto;
 		        	Tablero.numMinas=minas;
