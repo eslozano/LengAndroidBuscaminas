@@ -1,5 +1,8 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -9,36 +12,46 @@ public class ScoreHandler {
 		throw new AssertionError();
 	}
 
-	public static Score getScore(DificultadScore dificultad, Context context) {
-		String nombre = null;
+	public static ArrayList<Score> getScores(DificultadScore dificultad,
+			Context context) {
+		String nombre = null, nameKey, timeKey;
 		int tiempo = 0;
-		Score score = new Score(null, 0, dificultad);
+		ArrayList<Score> scores = new ArrayList<Score>();
 		SharedPreferences prefs = context.getSharedPreferences("puntajes",
 				Context.MODE_PRIVATE);
 		switch (dificultad) {
 		case FACIL:
-			nombre = prefs.getString("nameEasy", "anonimo");
-			tiempo = prefs.getInt("timeEasy", 999);
+			nameKey = "nameEasy";
+			timeKey = "timeEasy";
 			break;
 		case MEDIO:
-			nombre = prefs.getString("nameNormal", "anonimo");
-			tiempo = prefs.getInt("timeNormal", 999);
+			nameKey = "nameNormal";
+			timeKey = "timeNormal";
 			break;
 		case DIFICIL:
-			nombre = prefs.getString("nameHard", "anonimo");
-			tiempo = prefs.getInt("timeHard", 999);
+			nameKey = "nameHard";
+			timeKey = "timeHard";
 			break;
 		default:
 			return null;
 		}
-		score.setNombre(nombre);
-		score.setTiempo(tiempo);
-		return score;
+		if (nameKey != null && timeKey != null) {
+			for (int i = 0; i < 3; i++) {
+				Score score = new Score(null, 0, dificultad);
+				nombre = prefs.getString(nameKey + i, "anonimo");
+				tiempo = prefs.getInt(timeKey + i, 999);
+				score.setNombre(nombre);
+				score.setTiempo(tiempo);
+				scores.add(score);
+			}
+		}
+		return scores;
 	}
 
-	public static void setScore(Score score, Context context) {
-		if (score != null) {
+	public static void setScores(ArrayList<Score> scores, Context context) {
+		if (scores != null) {
 			String nameKey = null, timeKey = null;
+			Score score = scores.get(0);
 			SharedPreferences prefs = context.getSharedPreferences("puntajes",
 					Context.MODE_PRIVATE);
 			SharedPreferences.Editor editor = prefs.edit();
@@ -59,8 +72,11 @@ public class ScoreHandler {
 				break;
 			}
 			if (nameKey != null && timeKey != null) {
-				editor.putString(nameKey, score.getNombre());
-				editor.putInt(timeKey, score.getTiempo());
+				for (int i = 0; i < 3; i++) {
+					score = scores.get(i);
+					editor.putString(nameKey + i, score.getNombre());
+					editor.putInt(timeKey + i, score.getTiempo());
+				}
 				editor.commit();
 			}
 		}
@@ -125,28 +141,38 @@ public class ScoreHandler {
 		return DificultadScore.INVALIDO;
 	}
 
-	public static boolean checkCurrentScore(int time, Context context){
-		int tiempo;		
-		tiempo = (getScore(getTempDificultad(context),context)).getTiempo();
-		return time<tiempo;		
+	public static boolean checkCurrentScore(int time, Context context) {
+		List<Score> scores = getScores(getTempDificultad(context), context);
+		for (Score score : scores) {
+			if (score.getTiempo() > time) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
-	public static void setNewScore(String nombre, int time, Context context){
+
+	public static void setNewScore(String nombre, int time, Context context) {
+		ArrayList<Score> scores = getScores(getTempDificultad(context), context);
 		Score score = new Score(nombre, time, getTempDificultad(context));
-		setScore(score, context);
+		scores.add(score);
+		Collections.sort(scores);
+		scores.remove(scores.size() - 1);
+		setScores(scores, context);
 	}
-	
-	public static void deleteScores(Context context){
+
+	public static void deleteScores(Context context) {
 		SharedPreferences prefs = context.getSharedPreferences("puntajes",
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
-		editor.remove("nameEasy");
-		editor.remove("timeEasy");
-		editor.remove("nameNormal");
-		editor.remove("timeNormal");
-		editor.remove("nameHard");
-		editor.remove("timeHard");
+		for (int i = 0; i < 2; i++) {
+			editor.remove("nameEasy" + i);
+			editor.remove("timeEasy" + i);
+			editor.remove("nameNormal" + i);
+			editor.remove("timeNormal" + i);
+			editor.remove("nameHard" + i);
+			editor.remove("timeHard" + i);
+		}
 		editor.commit();
 	}
-	
+
 }
