@@ -16,16 +16,16 @@
     <string name="usuario">Custom</string>
     <string name="title_activity_tablero">Busca Majin Boo</string>
     <string name="title_activity_custom">Custom</string>
-    <string name="alto_custom">Alto (9-24)</string>
-    <string name="ancho_custom">Ancho(9-30)</string>
-    <string name="minas_custom">Minas(10-668)</string>
+    <string name="alto_custom">Hight</string>
+    <string name="ancho_custom">Weight</string>
+    <string name="minas_custom">Majin Boos</string>
     <string name="aceptar_custom">Aceptar</string>
     <string name="title_activity_custom_tablero">Custom_tablero</string>
     <string name="default_name">anonymous</string>
     <string name="default_text">anonymous 999</string>
-    <string name="label_facil">facil</string>
-    <string name="label_medio">medio</string>
-    <string name="label_dificil">dificil</string>
+    <string name="label_facil">EASY</string>
+    <string name="label_medio">NORMAL</string>
+    <string name="label_dificil">HARD</string>
     <string name="button_text_borrarTiempos">Borrar Tiempos</string>
     
 

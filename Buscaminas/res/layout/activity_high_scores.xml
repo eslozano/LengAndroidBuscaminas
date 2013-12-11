@@ -15,7 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_facil"
-        android:layout_margin="40dp"
+        android:layout_margin="15dp"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -29,7 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -37,7 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -45,7 +51,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
@@ -54,8 +62,10 @@
         android:id="@+id/textViewMedioLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
+        android:layout_margin="15dp"
+        android:textSize="30sp"
         android:text="@string/label_medio"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -69,7 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -77,7 +89,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -85,7 +99,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
@@ -95,7 +111,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_dificil"
-        android:layout_margin="40dp"
+        android:textColor="@android:color/white"
+        android:layout_margin="15dp"
+        android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -109,7 +127,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -117,7 +137,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
@@ -125,15 +147,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="30sp"
             android:text="@string/default_text"
+            android:textColor="@android:color/white"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/buttonresetscores"
-        android:layout_width="451dp"
+        android:layout_width="525dp"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:onClick="borrarTiempos"
         android:text="@string/button_text_borrarTiempos" />
 
