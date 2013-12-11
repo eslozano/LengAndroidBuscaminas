@@ -23,9 +23,9 @@
     <string name="title_activity_custom_tablero">Custom_tablero</string>
     <string name="default_name">anonymous</string>
     <string name="default_text">anonymous 999</string>
-    <string name="label_facil">EASY</string>
-    <string name="label_medio">NORMAL</string>
-    <string name="label_dificil">HARD</string>
+    <string name="label_facil">    EASY</string>
+    <string name="label_medio">    NORMAL</string>
+    <string name="label_dificil">    HARD</string>
     <string name="button_text_borrarTiempos">Borrar Tiempos</string>
     
 

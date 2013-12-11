@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondoprincipal"
+    android:background="@drawable/fondomenu"
     android:orientation="vertical"
     android:gravity="center_vertical"
     tools:context=".NewGame" >
@@ -11,11 +11,12 @@
              android:id="@+id/principiante"
              android:layout_width="fill_parent"
              android:layout_height="wrap_content"
-             android:background="@drawable/boton_metalico"
+             android:background="@drawable/boton"
              android:text="@string/principiante"
-             android:textColor="@android:color/black"
+             android:textColor="@color/naranja"
              android:textSize="50sp"
-             android:typeface="monospace"
+             android:typeface="normal"
+             android:textStyle="bold"
              android:layout_margin="50dp"  />
         
         <Button
@@ -23,10 +24,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/intermedio"
-            android:textColor="@android:color/black"
+            android:textColor="@color/naranja"
             android:textSize="50sp" 
-            android:background="@drawable/boton_metalico"
-            android:typeface="monospace"
+            android:background="@drawable/boton"
+            android:typeface="normal"
+            android:textStyle="bold"
             android:layout_margin="50dp"  />  
    
 
@@ -35,10 +37,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/avanzado"
-            android:textColor="@android:color/black"
+            android:textColor="@color/naranja"
             android:textSize="50sp" 
-            android:background="@drawable/boton_metalico"
-            android:typeface="monospace"
+            android:background="@drawable/boton"
+            android:typeface="normal"
+            android:textStyle="bold"
             android:layout_margin="50dp"  />
 
         <Button
@@ -46,10 +49,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/usuario"
-            android:textColor="@android:color/black"
+            android:textColor="@color/naranja"
             android:textSize="50sp" 
-            android:background="@drawable/boton_metalico"
-            android:typeface="monospace"
+            android:background="@drawable/boton"
+            android:typeface="normal"
+            android:textStyle="bold"
             android:layout_margin="50dp"  />
 	
 

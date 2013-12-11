@@ -25,7 +25,12 @@ class DetectorGestos extends SimpleOnGestureListener {
 				for (int c = 0; c < Tablero.columnas; c++) {
 					if (tablero.celdas[f][c].dentro((int) event.getX(),
 							(int) event.getY())) {
-						tablero.celdas[f][c].setEstado(EstadoCelda.BANDERA);
+						if(tablero.celdas[f][c].getEstado()!=EstadoCelda.BANDERA){
+							tablero.celdas[f][c].setEstado(EstadoCelda.BANDERA);
+						}else{
+							tablero.celdas[f][c].setEstado(EstadoCelda.CUBIERTA);
+						}
+						
 						if (tablero.estado == EstadoTablero.SIN_INICIAR) {
 							comenzarjuego();
 						}
