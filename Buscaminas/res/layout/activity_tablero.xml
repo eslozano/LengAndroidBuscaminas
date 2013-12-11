@@ -2,27 +2,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/fondo_goku"
+    android:background="@drawable/fondo_tablero"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".Tablero" >
 
-    <Chronometer
-        android:id="@+id/chronometer1"
-        android:layout_width="108dp"
-        android:layout_height="69dp"
-        android:typeface="sans"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:shadowColor="@color/blanco"
-        android:textColor="@color/amarillo"
-        android:textSize="30sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Chronometer
+            android:id="@+id/chronometer1"
+            android:layout_width="108dp"
+            android:layout_height="69dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:shadowColor="@color/blanco"
+            android:textColor="@color/azul"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/dragon_radar" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layoutTablero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+
     </LinearLayout>
 
 </LinearLayout>
