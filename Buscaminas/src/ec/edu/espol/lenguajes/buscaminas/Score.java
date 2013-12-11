@@ -39,15 +39,15 @@ public class Score implements Comparable<Score> {
 	@Override
 	public int compareTo(Score score) {
 		if (score != null) {
-			if (score.getTiempo() > this.getTiempo()) {
+			if (score.getTiempo() == this.getTiempo()) {
 				return 0;
-			} else if (score.getTiempo() > this.getTiempo()) {
-				return 1;
 			} else if (score.getTiempo() < this.getTiempo()) {
+				return 1;
+			} else if (score.getTiempo() > this.getTiempo()) {
 				return -1;
 			}
 		}
-		throw new NullPointerException();
+		return 0;
 	}
 
 }

@@ -8,93 +8,91 @@ import android.widget.Toast;
 import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoCelda;
 import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoTablero;
 
-class DetectorGestos extends SimpleOnGestureListener{
+class DetectorGestos extends SimpleOnGestureListener {
 	Tablero tablero;
 	boolean comenzarCron;
-	
-	public DetectorGestos(Tablero tablero){
-		this.tablero=tablero;
-		this.comenzarCron=false;
+
+	public DetectorGestos(Tablero tablero) {
+		this.tablero = tablero;
+		this.comenzarCron = false;
 	}
-	
+
 	@Override
 	public void onLongPress(MotionEvent event) {
-		if (tablero.estado==EstadoTablero.SIN_TERMINAR || tablero.estado==EstadoTablero.SIN_INICIAR){
-		    for (int f = 0; f < Tablero.filas; f++) {
-		        for (int c = 0; c < Tablero.columnas; c++) {
-		            if (tablero.celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
-		            	tablero.celdas[f][c].setEstado(EstadoCelda.BANDERA);
-		            	if(tablero.estado==EstadoTablero.SIN_INICIAR){
-		            		comenzarjuego();
-		            	}
-		            	tablero.tableroView.invalidate();
-		            }
-		        }
-		   }	
-		}		
+		if (tablero.estado == EstadoTablero.SIN_TERMINAR
+				|| tablero.estado == EstadoTablero.SIN_INICIAR) {
+			for (int f = 0; f < Tablero.filas; f++) {
+				for (int c = 0; c < Tablero.columnas; c++) {
+					if (tablero.celdas[f][c].dentro((int) event.getX(),
+							(int) event.getY())) {
+						tablero.celdas[f][c].setEstado(EstadoCelda.BANDERA);
+						if (tablero.estado == EstadoTablero.SIN_INICIAR) {
+							comenzarjuego();
+						}
+						tablero.tableroView.invalidate();
+					}
+				}
+			}
+		}
 	}
-	
+
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent event) {
-		
-		if (tablero.estado==EstadoTablero.SIN_TERMINAR || tablero.estado==EstadoTablero.SIN_INICIAR){
-		    for (int f = 0; f < Tablero.filas; f++) {
-		        for (int c = 0; c < Tablero.columnas; c++) {
-		            if (tablero.celdas[f][c].dentro((int) event.getX(),(int) event.getY())) {
-		            	tablero.celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);		            	
-		            	if(tablero.estado==EstadoTablero.SIN_INICIAR){
-		            		comenzarjuego();
-		            	}
-		                if (tablero.celdas[f][c].getContenido() == 80) {
-		                    Toast.makeText(tablero, "Booooooooommmmmmmmmmmm",Toast.LENGTH_LONG).show();
-		                	tablero.estado = EstadoTablero.PERDIDO;
-		                	tablero.crono.stop();
-		                } else if (tablero.celdas[f][c].getContenido() == 0)
-		                	tablero.recorrer(f, c);
-		                
-		                tablero.tableroView.invalidate();
-		            }
-		        }
-		    }	
+
+		if (tablero.estado == EstadoTablero.SIN_TERMINAR
+				|| tablero.estado == EstadoTablero.SIN_INICIAR) {
+			for (int f = 0; f < Tablero.filas; f++) {
+				for (int c = 0; c < Tablero.columnas; c++) {
+					if (tablero.celdas[f][c].dentro((int) event.getX(),
+							(int) event.getY())) {
+						tablero.celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);
+						if (tablero.estado == EstadoTablero.SIN_INICIAR) {
+							comenzarjuego();
+						}
+						if (tablero.celdas[f][c].getContenido() == 80) {
+							Toast.makeText(tablero, "Booooooooommmmmmmmmmmm",
+									Toast.LENGTH_LONG).show();
+							tablero.estado = EstadoTablero.PERDIDO;
+							tablero.crono.stop();
+						} else if (tablero.celdas[f][c].getContenido() == 0)
+							tablero.recorrer(f, c);
+
+						tablero.tableroView.invalidate();
+					}
+				}
+			}
 		}
-		if (tablero.gano() && tablero.estado==EstadoTablero.GANADO) {
-		    Toast.makeText(tablero, "Ganaste", Toast.LENGTH_LONG).show();
-		    tablero.crono.stop();
+		if (tablero.gano() && tablero.estado == EstadoTablero.GANADO) {
+			tablero.crono.stop();
+			int time = tablero.getTiempo();
+			Toast.makeText(tablero, "Ganaste "+ time, Toast.LENGTH_LONG).show();			
+			if (ScoreHandler.checkCurrentScore(time, tablero)) {
+				ScoreHandler.setTempTime(time, tablero);
+				tablero.abrirDialogo();
+			}
+			
 		}
 		return true;
-	}	
-	
-	public void comenzarjuego(){
-		if(tablero.estado==EstadoTablero.SIN_INICIAR){
+	}
+
+	public void comenzarjuego() {
+		if (tablero.estado == EstadoTablero.SIN_INICIAR) {
 			iniciarcronometro();
-			tablero.estado=EstadoTablero.SIN_TERMINAR;
+			tablero.estado = EstadoTablero.SIN_TERMINAR;
 			tablero.disponerBombas();
 			tablero.contarBombasPerimetro();
 		}
-		
+
 	}
-	
-	public void iniciarcronometro(){
-		if(!this.comenzarCron){
-    		tablero.crono = (Chronometer) tablero.findViewById(R.id.chronometer1);
-            tablero.crono.setBase(SystemClock.elapsedRealtime());  
-    		tablero.crono.start();
-    		this.comenzarCron=true;    		
-    	}
+
+	public void iniciarcronometro() {
+		if (!this.comenzarCron) {
+			tablero.crono = (Chronometer) tablero
+					.findViewById(R.id.chronometer1);
+			tablero.crono.setBase(SystemClock.elapsedRealtime());
+			tablero.crono.start();
+			this.comenzarCron = true;
+		}
 	}
-	
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

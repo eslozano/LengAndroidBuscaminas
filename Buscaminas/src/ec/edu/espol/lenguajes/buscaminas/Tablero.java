@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -45,7 +46,7 @@ public class Tablero extends Activity implements OnClickListener{
      private MotionEvent event;
      private GestureDetector detector;
      private View.OnTouchListener mGestureListener;
-     
+     Context contexto;
      public void nuevoTablero() {             
              this.estado = EstadoTablero.SIN_INICIAR;
              //this.tiempo = 0;
@@ -60,8 +61,8 @@ public class Tablero extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_tablero);		
-				         
+		setContentView(R.layout.activity_tablero);
+		contexto= this;		         
 		detector = new GestureDetector(this, new DetectorGestos(this));
 		mGestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -242,14 +243,14 @@ public class Tablero extends Activity implements OnClickListener{
 	
 	
 
-	private int getTiempo() {
+	public int getTiempo() {
 		int tiempo=0;
 		Chronometer crono = (Chronometer) findViewById(R.id.chronometer1);
 		String chronoText = crono.getText().toString();
 		String array[] = chronoText.split(":");
 		if (array.length == 2) {
 			tiempo = Integer.parseInt(array[0]) * 60 
-					+ Integer.parseInt(array[1]) * 1000;
+					+ Integer.parseInt(array[1]);
 		} else if (array.length == 3) {
 			tiempo = Integer.parseInt(array[0]) * 60 * 60  
 					+ Integer.parseInt(array[1]) * 60 * 
@@ -280,6 +281,13 @@ public class Tablero extends Activity implements OnClickListener{
 						ScoreHandler.setNewScore(name,
 								ScoreHandler.getTempTime(Tablero.this),
 								Tablero.this);
+						
+						
+						Tablero.this.finish();
+							
+						
+						
+						
 					}
 				});
 
@@ -342,6 +350,9 @@ public class Tablero extends Activity implements OnClickListener{
         }
     }
 	
+	
+	
+	
 		
 	
 	private void inicializarCeldas() {
@@ -351,4 +362,9 @@ public class Tablero extends Activity implements OnClickListener{
                         this.celdas[i][j]=new Celda(i,j);
                 }
 	}
+	
+	
+		
+	
+	
 }

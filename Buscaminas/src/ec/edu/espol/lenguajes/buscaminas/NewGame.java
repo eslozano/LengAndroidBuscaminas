@@ -1,7 +1,6 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
 import ec.edu.espol.lenguajes.buscaminas.eventos.EventosMenuPartida;
-import ec.edu.espol.lenguajes.buscaminas.eventos.EventosMenuPrincipal;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
