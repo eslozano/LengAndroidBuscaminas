@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import ec.edu.espol.lenguajes.buscaminas.elementos.Celda;
 import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoCelda;
 import ec.edu.espol.lenguajes.buscaminas.elementos.EstadoTablero;
+import ec.edu.espol.lenguajes.buscaminas.eventos.EventosMenuPartida;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,8 +31,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -45,6 +50,8 @@ public class Tablero extends Activity implements OnClickListener {
 	private MotionEvent event;
 	private GestureDetector detector;
 	private View.OnTouchListener mGestureListener;
+	private Bitmap bmpUno, bmpDos, bmpTres, bmpCuatro, bmpCinco, bmpSeis,
+			bmpSiete, bmpOcho, bmpBand, bmpBomb;
 	Context contexto;
 
 	public void nuevoTablero() {
@@ -77,9 +84,38 @@ public class Tablero extends Activity implements OnClickListener {
 
 		layout.addView(tableroView);
 
+		ImageButton botonReiniciar = (ImageButton) findViewById(R.id.reiniciar);
+		botonReiniciar.setOnClickListener(new OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+			@Override
+			public void onClick(View view) {
+				Tablero.this.recreate();
+
+			}
+		});
+
+		inicializarBmps();
 		nuevoTablero();
 		inicializarCeldas();
 
+	}
+
+	public void inicializarBmps() {
+		bmpUno = BitmapFactory.decodeResource(getResources(), R.drawable.uno);
+		bmpDos = BitmapFactory.decodeResource(getResources(), R.drawable.dos);
+		bmpTres = BitmapFactory.decodeResource(getResources(), R.drawable.tres);
+		bmpCuatro = BitmapFactory.decodeResource(getResources(),
+				R.drawable.cuatro);
+		bmpCinco = BitmapFactory.decodeResource(getResources(),
+				R.drawable.cinco);
+		bmpSeis = BitmapFactory.decodeResource(getResources(), R.drawable.seis);
+		bmpSiete = BitmapFactory.decodeResource(getResources(),
+				R.drawable.siete);
+		bmpOcho = BitmapFactory.decodeResource(getResources(), R.drawable.ocho);
+		bmpBand = BitmapFactory.decodeResource(getResources(),
+				R.drawable.mrsatan);
+		bmpBomb = BitmapFactory.decodeResource(getResources(),
+				R.drawable.majinboo);
 	}
 
 	public void contarBombasPerimetro() {
@@ -159,7 +195,7 @@ public class Tablero extends Activity implements OnClickListener {
 
 		protected void onDraw(Canvas canvas) {
 
-			int ancho = 0, filaact = 0, alto = 0, margen=0;
+			int ancho = 0, filaact = 0, alto = 0, margen = 0;
 			if (canvas.getWidth() < canvas.getHeight()) {
 				ancho = tableroView.getWidth();
 				alto = tableroView.getHeight();
@@ -172,9 +208,8 @@ public class Tablero extends Activity implements OnClickListener {
 				anchocua = (ancho / Tablero.columnas);
 			else
 				anchocua = alto / Tablero.filas;
-			
-			
-			margen= (ancho-(anchocua*Tablero.columnas))/2;
+
+			margen = (ancho - (anchocua * Tablero.columnas)) / 2;
 
 			Paint paint = new Paint();
 			paint.setTextSize(20);
@@ -186,6 +221,27 @@ public class Tablero extends Activity implements OnClickListener {
 			Paint paint3 = new Paint();
 
 			Paint paintlinea1 = new Paint();
+
+			bmpUno = Bitmap.createScaledBitmap(bmpUno, anchocua, anchocua,
+					false);
+			bmpDos = Bitmap.createScaledBitmap(bmpDos, anchocua, anchocua,
+					false);
+			bmpTres = Bitmap.createScaledBitmap(bmpTres, anchocua, anchocua,
+					false);
+			bmpCuatro = Bitmap.createScaledBitmap(bmpCuatro, anchocua,
+					anchocua, false);
+			bmpCinco = Bitmap.createScaledBitmap(bmpCinco, anchocua, anchocua,
+					false);
+			bmpSeis = Bitmap.createScaledBitmap(bmpSeis, anchocua, anchocua,
+					false);
+			bmpSiete = Bitmap.createScaledBitmap(bmpSiete, anchocua, anchocua,
+					false);
+			bmpOcho = Bitmap.createScaledBitmap(bmpOcho, anchocua, anchocua,
+					false);
+			bmpBand = Bitmap.createScaledBitmap(bmpBand, anchocua, anchocua,
+					false);
+			bmpBomb = Bitmap.createScaledBitmap(bmpBomb, anchocua, anchocua,
+					false);
 
 			for (int f = 0; f < Tablero.filas; f++) {
 				for (int c = 0; c < Tablero.columnas; c++) {
@@ -202,43 +258,93 @@ public class Tablero extends Activity implements OnClickListener {
 						paint.setARGB(209, 209, 209, 0);
 					}
 
-					celdas[f][c].fijarxy(margen+(c * anchocua), filaact, anchocua);
-					canvas.drawRect(margen+(c * anchocua), filaact,margen+ c * anchocua
-							+ anchocua - 2, filaact + anchocua - 2, paint);
-					canvas.drawLine(margen+c * anchocua, filaact, margen+c * anchocua
-							+ anchocua, filaact, paintlinea1);
-					canvas.drawLine(margen+c * anchocua + anchocua - 1, filaact, margen+c
-							* anchocua + anchocua - 1, filaact + anchocua,
-							paintlinea1);
+					celdas[f][c].fijarxy(margen + (c * anchocua), filaact,
+							anchocua);
+					canvas.drawRect(margen + (c * anchocua), filaact, margen
+							+ c * anchocua + anchocua - 2, filaact + anchocua
+							- 2, paint);
+					canvas.drawLine(margen + c * anchocua, filaact, margen + c
+							* anchocua + anchocua, filaact, paintlinea1);
+					canvas.drawLine(margen + c * anchocua + anchocua - 1,
+							filaact, margen + c * anchocua + anchocua - 1,
+							filaact + anchocua, paintlinea1);
 
 					if (celdas[f][c].getContenido() >= 1
 							&& celdas[f][c].getContenido() <= 8
 							&& celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA)
-						canvas.drawText(
-								String.valueOf(celdas[f][c].getContenido()), margen+c
-										* anchocua + (anchocua / 2) - 8,
-								filaact + anchocua / 2, paint2);
+						switch (celdas[f][c].getContenido()) {
+						case 1: {
+							canvas.drawBitmap(bmpUno, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 2: {
+
+							canvas.drawBitmap(bmpDos, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 3: {
+							canvas.drawBitmap(bmpTres, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 4: {
+							canvas.drawBitmap(bmpCuatro, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 5: {
+							canvas.drawBitmap(bmpCinco, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 6: {
+							canvas.drawBitmap(bmpSeis, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 7: {
+							canvas.drawBitmap(bmpSiete, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						case 8: {
+							canvas.drawBitmap(bmpOcho, margen + c * anchocua,
+									filaact, null);
+							break;
+						}
+						}
+
+					/*
+					 * canvas.drawText(
+					 * String.valueOf(celdas[f][c].getContenido()), margen+c
+					 * anchocua + (anchocua / 2) - 8, filaact + anchocua / 2,
+					 * paint2);
+					 */
 
 					if (celdas[f][c].getEstado() == EstadoCelda.BANDERA) {
-						Paint bandera = new Paint();
-						bandera.setARGB(255, 0, 0, 0);
-						canvas.drawCircle(margen+c * anchocua + (anchocua / 2),
-								filaact + (anchocua / 2), 8, bandera);
+
+						canvas.drawBitmap(bmpBand, margen + c * anchocua,
+								filaact, null);
+
+						/*
+						 * Paint bandera = new Paint(); bandera.setARGB(255, 0,
+						 * 0, 0); canvas.drawCircle(margen+c * anchocua +
+						 * (anchocua / 2), filaact + (anchocua / 2), 8,
+						 * bandera);
+						 */
 					}
 
 					if (celdas[f][c].getContenido() == 80
 							&& celdas[f][c].getEstado() == EstadoCelda.DESCUBIERTA) {
-						// Picture p = new Picture();
-						// canvas.drawPicture()
-						Bitmap bmp = BitmapFactory.decodeResource(getResources(),
-			                    R.drawable.dragon_radar);
-						bmp= Bitmap.createScaledBitmap(bmp, anchocua, anchocua, false);
-			            canvas.drawBitmap(bmp, margen+c * anchocua ,
-								filaact , null);
-						//Paint bomba = new Paint();
-						//bomba.setARGB(255, 255, 0, 0);
-						//canvas.drawCircle(margen+c * anchocua + (anchocua / 2),
-							//	filaact + (anchocua / 2), 8, bomba);
+						canvas.drawBitmap(bmpBomb, margen + c * anchocua,
+								filaact, null);
+						// Paint bomba = new Paint();
+						// bomba.setARGB(255, 255, 0, 0);
+						// canvas.drawCircle(margen+c * anchocua + (anchocua /
+						// 2),
+						// filaact + (anchocua / 2), 8, bomba);
 					}
 
 				}
@@ -353,4 +459,27 @@ public class Tablero extends Activity implements OnClickListener {
 			}
 	}
 
+	public void marcarBombas() {
+		for (int f = 0; f < Tablero.filas; f++) {
+			for (int c = 0; c < Tablero.columnas; c++) {
+				if (Tablero.this.celdas[f][c].getEstado() == EstadoCelda.CUBIERTA
+						&& Tablero.this.celdas[f][c].getContenido() == 80) {
+					Tablero.this.celdas[f][c]
+							.setEstado(EstadoCelda.DESCUBIERTA);					
+				}
+			}
+		}
+	}
+
+	public void marcarBanderas() {
+		for (int f = 0; f < Tablero.filas; f++) {
+			for (int c = 0; c < Tablero.columnas; c++) {
+				if (Tablero.this.celdas[f][c].getEstado() == EstadoCelda.CUBIERTA
+						&& Tablero.this.celdas[f][c].getContenido() == 80) {
+					Tablero.this.celdas[f][c]
+							.setEstado(EstadoCelda.BANDERA);					
+				}
+			}
+		}
+	}
 }

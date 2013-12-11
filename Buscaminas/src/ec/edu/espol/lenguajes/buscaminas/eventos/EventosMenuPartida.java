@@ -40,7 +40,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			ScoreHandler.setTempDificultad(DificultadScore.FACIL, this.contexto);
 			Tablero.filas=5;
 			Tablero.columnas=5;
-			Tablero.numMinas=3;
+			Tablero.numMinas=5;
 			Intent nuevaActividad = new Intent(this.contexto,Tablero.class);
 			this.contexto.startActivity(nuevaActividad);
 			break;
@@ -49,7 +49,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			ScoreHandler.setTempDificultad(DificultadScore.MEDIO, this.contexto);
 			Tablero.filas=8;
 			Tablero.columnas=8;
-			Tablero.numMinas=10;
+			Tablero.numMinas=20;
 			Intent nuevaActividad = new Intent(this.contexto,Tablero.class);
 			this.contexto.startActivity(nuevaActividad);
 			break;
@@ -58,7 +58,7 @@ public class EventosMenuPartida   implements OnClickListener{
 			ScoreHandler.setTempDificultad(DificultadScore.MEDIO, this.contexto);
 			Tablero.filas=11;
 			Tablero.columnas=11;
-			Tablero.numMinas=20;
+			Tablero.numMinas=80;
 			Intent nuevaActividad = new Intent(this.contexto,Tablero.class);
 			this.contexto.startActivity(nuevaActividad);
 			break;
