@@ -75,10 +75,10 @@ La programación del juego requerirá entender el Modelo Vista Controlador que m
 El juego consiste es descubrir todas las celdas del tablero que no se encuentre el Majin  Boo.
 El juego consta de  diferentes dificultades, cada dificultad posee un tablero con un tamaño específico y un número de minas designado, las dificultades son las siguientes:\\
 \begin{itemize}
-\item Beginner:Muestra un tablero de dimensión 5x5, con 5 minas.\\
-\item Intermediate:Muestra un tablero de dimensión 8x8 con 10 minas\\
-\item Advanced:Muestra un tablero de dimensión 11x11 con 20 minas \\
-\item  Custom:El jugador escoge las dimensiones del tablero con la cantidad de minas respectivas\\
+\item Beginner:Muestra un tablero de dimensión 5x5, con 5 minas.
+\item Intermediate:Muestra un tablero de dimensión 8x8 con 10 minas.
+\item Advanced:Muestra un tablero de dimensión 11x11 con 20 minas.
+\item  Custom:El jugador escoge las dimensiones del tablero con la cantidad de minas respectivas.
 \end{itemize}
 \subsection{Reglas del Juego}
 \begin{itemize}
@@ -88,12 +88,17 @@ El juego consta de  diferentes dificultades, cada dificultad posee un tablero co
 adyacentes a ella que están vacías o contienen números.
 \item Un celda tiene adyacencia con las 8 celdas a su alrededor.
 \item El juego finalizará cuando todos los casilleros que no contienen minas han sido descubiertos y se le presentara un mensaje al jugador diciendo “Ganaste” y si el tiempo de juego se encuentra entre los 3 primeros se le pedirá el nombre del jugador para registrarlo entre los mejores tiempos.
+\begin{center}
+\includegraphics[scale=0.2]{Imagenes/SSPerder.png}
+\includegraphics[scale=0.2]{Imagenes/SSGanar.png}\\
+Perder y Ganar
+\end{center}
 \end {itemize}
 
 \section{Manual}
 Al iniciar el juego nos encontramos con el menu principal. Donde podremos escoger 3 opciones:
 \begin{center}
-\includegraphics[scale=0.15]{Imagenes/SSMenuPrincipal.png}
+\includegraphics[scale=0.2]{Imagenes/SSMenuPrincipal.png}
 \end{center}
 \subsection{Iniciar Partida}
 En este menu podemos escoger entre 3 dificultades prediseñadas y una dificultad personalizable
@@ -101,23 +106,20 @@ En este menu podemos escoger entre 3 dificultades prediseñadas y una dificultad
 \includegraphics[scale=0.2]{Imagenes/SSMenuNewGame.png}
 \end{center}
 \begin{itemize}
-\item Beginner:Muestra un tablero de dimensión 5x5, con 5 minas.\\
+\item Beginner:Muestra un tablero de dimensión 5x5, con 5 minas.
+\item Intermediate:Muestra un tablero de dimensión 8x8 con 10 minas
+\item Advanced:Muestra un tablero de dimensión 11x11 con 20 minas 
 \begin{center}
 \includegraphics[scale=0.2]{Imagenes/SSEasy.png}
-\end{center}
-\item Intermediate:Muestra un tablero de dimensión 8x8 con 10 minas\\
-\begin{center}
 \includegraphics[scale=0.2]{Imagenes/SSNormal.png}
-\end{center}
-\item Advanced:Muestra un tablero de dimensión 11x11 con 20 minas \\
-\begin{center}
 \includegraphics[scale=0.2]{Imagenes/SSHard.png}
 \end{center}
 \end {itemize}
 \subsubsection{Partida personalizada}
 Esta opcion nos permite escoger numero de celdas del tablero (ancho y alto) y el numero de minas.
 \begin{center}
-\includegraphics[scale=0.2]{Imagenes/SSMenuNewGame.png}
+\includegraphics[scale=0.2]{Imagenes/SSCustom01.png}
+\includegraphics[scale=0.2]{Imagenes/SSCustom.png}
 \end{center}
 \subsection{Revisasr Puntuaciones Maximas}
 Este menu nos permite revisar los mejores tiempos guardados, ademas de darnos la opcion de resetear los tiempos.
