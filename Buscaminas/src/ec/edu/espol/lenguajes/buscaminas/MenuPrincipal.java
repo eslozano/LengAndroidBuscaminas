@@ -1,7 +1,7 @@
 package ec.edu.espol.lenguajes.buscaminas;
 
-import ec.edu.espol.lenguajes.buscaminas.eventos.EventosMenuPrincipal;
 import ec.edu.espol.lenguajes.buscaminas.R;
+import ec.edu.espol.lenguajes.buscaminas.eventos.EventosMenuPrincipal;
 import android.os.Bundle;
 import android.widget.Button;
 import android.app.Activity;

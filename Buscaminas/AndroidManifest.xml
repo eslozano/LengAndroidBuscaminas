@@ -15,6 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.MenuPrincipal"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" 
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,26 +26,38 @@
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.HighScores"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" 
             android:label="@string/title_activity_high_scores" >
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.NewGame"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" 
             android:label="@string/title_activity_new_game" >
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.About"
-            android:label="@string/title_activity_about" >
+            android:label="@string/title_activity_about" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.Tablero"
-            android:label="@string/title_activity_tablero" >
+            android:label="@string/title_activity_tablero"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.Custom"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" 
             android:label="@string/title_activity_custom" >
         </activity>
         <activity
             android:name="ec.edu.espol.lenguajes.buscaminas.Custom_tablero"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" 
             android:label="@string/title_activity_custom_tablero" >
         </activity>
     </application>
