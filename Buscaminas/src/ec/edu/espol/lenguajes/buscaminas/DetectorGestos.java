@@ -25,12 +25,13 @@ class DetectorGestos extends SimpleOnGestureListener {
 				for (int c = 0; c < Tablero.columnas; c++) {
 					if (tablero.celdas[f][c].dentro((int) event.getX(),
 							(int) event.getY())) {
-						if(tablero.celdas[f][c].getEstado()!=EstadoCelda.BANDERA){
+						if (tablero.celdas[f][c].getEstado() == EstadoCelda.CUBIERTA) {
 							tablero.celdas[f][c].setEstado(EstadoCelda.BANDERA);
-						}else{
-							tablero.celdas[f][c].setEstado(EstadoCelda.CUBIERTA);
+						} else if (tablero.celdas[f][c].getEstado() == EstadoCelda.BANDERA) {
+							tablero.celdas[f][c]
+									.setEstado(EstadoCelda.CUBIERTA);
 						}
-						
+
 						if (tablero.estado == EstadoTablero.SIN_INICIAR) {
 							comenzarjuego();
 						}
@@ -48,40 +49,43 @@ class DetectorGestos extends SimpleOnGestureListener {
 				|| tablero.estado == EstadoTablero.SIN_INICIAR) {
 			for (int f = 0; f < Tablero.filas; f++) {
 				for (int c = 0; c < Tablero.columnas; c++) {
-					if (tablero.celdas[f][c].dentro((int) event.getX(),
-							(int) event.getY())) {
+					if (tablero.celdas[f][c].dentro((int) event.getX(), (int) event.getY()) && tablero.celdas[f][c].getEstado()==EstadoCelda.CUBIERTA) {
 						tablero.celdas[f][c].setEstado(EstadoCelda.DESCUBIERTA);
 						if (tablero.estado == EstadoTablero.SIN_INICIAR) {
 							comenzarjuego();
 						}
-						if (tablero.celdas[f][c].getContenido() == 80) {
-							Toast.makeText(tablero, "Booooooooommmmmmmmmmmm",
-									Toast.LENGTH_LONG).show();
-							tablero.estado = EstadoTablero.PERDIDO;
-							tablero.crono.stop();
-							tablero.marcarBombas();
-						} else if (tablero.celdas[f][c].getContenido() == 0)
-							tablero.recorrer(f, c);
-
+						if (tablero.celdas[f][c].getEstado() != EstadoCelda.BANDERA) {
+							if (tablero.celdas[f][c].getContenido() == 80) {
+								Toast.makeText(tablero,
+										"Booooooooommmmmmmmmmmm",
+										Toast.LENGTH_LONG).show();
+								tablero.estado = EstadoTablero.PERDIDO;
+								tablero.crono.stop();
+								tablero.marcarBombas();
+							} else if (tablero.celdas[f][c].getContenido() == 0)
+								tablero.recorrer(f, c);
+						}
 						tablero.tableroView.invalidate();
+
 					}
 				}
 			}
 		}
-		if(tablero.estado!=EstadoTablero.PERDIDO){
+		if (tablero.estado != EstadoTablero.PERDIDO) {
 			if (tablero.gano() && tablero.estado == EstadoTablero.GANADO) {
 				tablero.crono.stop();
 				int time = tablero.getTiempo();
-				Toast.makeText(tablero, "Ganaste "+ time, Toast.LENGTH_LONG).show();
+				Toast.makeText(tablero, "Ganaste", Toast.LENGTH_LONG)
+						.show();
 				tablero.marcarBanderas();
 				if (ScoreHandler.checkCurrentScore(time, tablero)) {
 					ScoreHandler.setTempTime(time, tablero);
 					tablero.abrirDialogo();
 				}
-				
+
 			}
 		}
-		
+
 		return true;
 	}
 

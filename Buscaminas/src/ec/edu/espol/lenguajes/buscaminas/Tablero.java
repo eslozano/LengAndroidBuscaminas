@@ -390,6 +390,7 @@ public class Tablero extends Activity implements OnClickListener {
 
 					}
 				});
+		builder.setTitle("Congratulations, new record!!!");
 
 		final AlertDialog alertDialog = builder.create();
 		alertDialog.show();

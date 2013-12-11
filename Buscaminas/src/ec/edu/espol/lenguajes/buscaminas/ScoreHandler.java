@@ -3,8 +3,12 @@ package ec.edu.espol.lenguajes.buscaminas;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
+
+import android.R.raw;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 public class ScoreHandler {
 
@@ -38,7 +42,7 @@ public class ScoreHandler {
 		if (nameKey != null && timeKey != null) {
 			for (int i = 0; i < 3; i++) {
 				Score score = new Score(null, 0, dificultad);
-				nombre = prefs.getString(nameKey + i, "anonimo");
+				nombre = prefs.getString(nameKey + i, context.getString(R.string.default_name));
 				tiempo = prefs.getInt(timeKey + i, 999);
 				score.setNombre(nombre);
 				score.setTiempo(tiempo);
