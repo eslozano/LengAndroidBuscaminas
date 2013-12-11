@@ -24,7 +24,7 @@ public class NewGame extends Activity {
 	public Context contexto;
 	protected TextView fontcustom;
 	public AlertDialog.Builder alertDialogBuilder;
-	public int alto=9, ancho=9, minas=10,var=658;
+	public int alto=9, ancho=4, minas=10,var=658;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -113,7 +113,7 @@ public class NewGame extends Activity {
 	     sbancho.setProgress(1);
 	     sbminas.setProgress(1);
 	     sbalto.setMax(15);
-	     sbancho.setMax(21);
+	     sbancho.setMax(11);
 	     sbminas.setMax(var);
 	     
 	     
@@ -156,7 +156,7 @@ public class NewGame extends Activity {
 	    	 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
 	                       //Log.d("MENSAJE", "On progress seekbar");
 	          int valor = progress; //grabamos el nuevo valor
-	          txtancho.setText(progress + 9 + ""); 
+	          txtancho.setText(progress + 4 + ""); 
 	                //Hacer lo que queramos con con el nuevo valor 
 	          ancho=Integer.parseInt(txtancho.getText().toString());
 	          sbminas.setEnabled(true);
