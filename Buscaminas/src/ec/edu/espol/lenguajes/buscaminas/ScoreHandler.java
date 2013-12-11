@@ -77,6 +77,7 @@ public class ScoreHandler {
 					editor.putString(nameKey + i, score.getNombre());
 					editor.putInt(timeKey + i, score.getTiempo());
 				}
+				editor.remove("tempScore");
 				editor.commit();
 			}
 		}
@@ -164,7 +165,7 @@ public class ScoreHandler {
 		SharedPreferences prefs = context.getSharedPreferences("puntajes",
 				Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = prefs.edit();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 3; i++) {
 			editor.remove("nameEasy" + i);
 			editor.remove("timeEasy" + i);
 			editor.remove("nameNormal" + i);

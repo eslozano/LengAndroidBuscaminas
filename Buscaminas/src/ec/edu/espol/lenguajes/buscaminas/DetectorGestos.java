@@ -54,6 +54,7 @@ class DetectorGestos extends SimpleOnGestureListener {
 									Toast.LENGTH_LONG).show();
 							tablero.estado = EstadoTablero.PERDIDO;
 							tablero.crono.stop();
+							tablero.marcarBombas();
 						} else if (tablero.celdas[f][c].getContenido() == 0)
 							tablero.recorrer(f, c);
 
@@ -62,16 +63,20 @@ class DetectorGestos extends SimpleOnGestureListener {
 				}
 			}
 		}
-		if (tablero.gano() && tablero.estado == EstadoTablero.GANADO) {
-			tablero.crono.stop();
-			int time = tablero.getTiempo();
-			Toast.makeText(tablero, "Ganaste "+ time, Toast.LENGTH_LONG).show();			
-			if (ScoreHandler.checkCurrentScore(time, tablero)) {
-				ScoreHandler.setTempTime(time, tablero);
-				tablero.abrirDialogo();
+		if(tablero.estado!=EstadoTablero.PERDIDO){
+			if (tablero.gano() && tablero.estado == EstadoTablero.GANADO) {
+				tablero.crono.stop();
+				int time = tablero.getTiempo();
+				Toast.makeText(tablero, "Ganaste "+ time, Toast.LENGTH_LONG).show();
+				tablero.marcarBanderas();
+				if (ScoreHandler.checkCurrentScore(time, tablero)) {
+					ScoreHandler.setTempTime(time, tablero);
+					tablero.abrirDialogo();
+				}
+				
 			}
-			
 		}
+		
 		return true;
 	}
 

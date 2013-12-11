@@ -61,7 +61,7 @@ public class HighScores extends Activity {
 		return true;
 	}
 
-	void borrarTiempos(View view) {
+	public void borrarTiempos(View view) {
 		ScoreHandler.deleteScores(view.getContext());
 		setTVTexts();
 	}
